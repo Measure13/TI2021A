@@ -13,7 +13,8 @@
     "task.h": "c",
     "adc_cali_scheme.h": "c",
     "protocol_examples_common.h": "c",
-    "string.h": "c"
+    "string.h": "c",
+    "*.inc": "c"
   },
   "idf.portWin": "COM3",
   "idf.adapterTargetName": "esp32"

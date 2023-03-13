@@ -39,28 +39,29 @@ void First_Sample()
             fn[i / 2].imag = 0.0f;
             // if (i == 0)
             // {
-            //     ESP_LOGI("ADC", "Value: %fmV, %x", fn[i].real, p->type1.data);
-            //     vTaskDelay(1);
+                ESP_LOGI("ADC", "Value: %fmV", fn[i / 2].real); // , %x, p->type1.data
+                // vTaskDelay(1);
             // }
         }
         FFT(fn, n);
         normmax = 0;
-        for (i = 1; i < n; ++i)
+        for (i = 0; i < n; ++i)
         {
             tempnorm = norm(fn[i]);
+            // ESP_LOGI(TAG, "FFT:%f", tempnorm);
             if (normmax < tempnorm)
             {
                 normmax = tempnorm;
                 argmax = i;
             }
-            if (i == 1 << 9)
+            if (i == 1 << 7)
             {
                 vTaskDelay(1);
             }
         }
-        free(fn);
         ESP_LOGI(TAG, "max norm:%f, max arg:%d", normmax, argmax);
         TCP_Send(fn);
+        free(fn);
     }
     else if (ret == ESP_ERR_TIMEOUT) {
         ESP_LOGE(TAG, "Time out!");
