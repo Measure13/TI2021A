@@ -1,6 +1,8 @@
 import socket
 import sys
 import struct
+import numpy as np
+import matplotlib.pyplot as plt
 
 PORT = 3333
 sock:socket.socket = None
