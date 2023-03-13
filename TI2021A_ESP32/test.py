@@ -2,7 +2,7 @@ import struct
 import numpy as np
 
 # a = np.array([1.0, 2.0], np.float32)
-a = 0.00010022753849625587
+a = 5
 # l = list("qwertyuiopasdfghjklzxcvbnm12")
 # for i in range(len(l) - 1, -1, -4):
 #     # print(l[i:i - 4:-1], i)
@@ -11,8 +11,8 @@ a = 0.00010022753849625587
 # for i in range(0, len(l), 4):
 #     print(l[i:i + 4])
 
-print(b := struct.pack("f", a))
+print(b := struct.pack("i", a))
 # for byte in b:
 #     print(byte)
-print(b[0:4][::-1])
-print(struct.unpack("!f", b))
+print(b[::-1])
+print(struct.unpack("!i", b)[0])
