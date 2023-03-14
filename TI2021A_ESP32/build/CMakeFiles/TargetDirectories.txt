@@ -9,7 +9,7 @@ D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/CMakeFiles/monitor.dir
 D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/CMakeFiles/flash.dir
 D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/CMakeFiles/encrypted-flash.dir
 D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/CMakeFiles/_project_elf_src.dir
-D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/CMakeFiles/GS2021A.elf.dir
+D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/CMakeFiles/TI2021A_ESP32.elf.dir
 D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/CMakeFiles/size.dir
 D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/CMakeFiles/size-files.dir
 D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/CMakeFiles/size-components.dir
@@ -615,6 +615,13 @@ D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/FFT/CMakeFiles/li
 D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/FFT/CMakeFiles/install.dir
 D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/FFT/CMakeFiles/install/local.dir
 D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/FFT/CMakeFiles/install/strip.dir
+D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/UART_HMI/CMakeFiles/__idf_UART_HMI.dir
+D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/UART_HMI/CMakeFiles/edit_cache.dir
+D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/UART_HMI/CMakeFiles/rebuild_cache.dir
+D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/UART_HMI/CMakeFiles/list_install_components.dir
+D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/UART_HMI/CMakeFiles/install.dir
+D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/UART_HMI/CMakeFiles/install/local.dir
+D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/UART_HMI/CMakeFiles/install/strip.dir
 D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/WiFi/CMakeFiles/__idf_WiFi.dir
 D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/WiFi/CMakeFiles/edit_cache.dir
 D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/WiFi/CMakeFiles/rebuild_cache.dir

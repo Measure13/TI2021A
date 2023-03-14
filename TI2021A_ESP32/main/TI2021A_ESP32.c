@@ -1,10 +1,12 @@
 #include <stdint.h>
+#include <math.h>
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "FFT.h"
 #include "WiFi.h"
 #include "ADC.h"
+#include "UART_HMI.h"
 
 static esp_err_t ret;
 
@@ -39,7 +41,7 @@ void First_Sample()
             fn[i / 2].imag = 0.0f;
             // if (i == 0)
             // {
-                ESP_LOGI("ADC", "Value: %fmV", fn[i / 2].real); // , %x, p->type1.data
+                // ESP_LOGI("ADC", "Value: %fmV", fn[i / 2].real); // , %x, p->type1.data
                 // vTaskDelay(1);
             // }
         }
@@ -68,6 +70,29 @@ void First_Sample()
     }
 }
 
+static void test_draw(void)
+{
+    static const float pi2 = 2 * acos(-1.0);
+    result = (float*)malloc(sizeof(float) * n);
+    for (int i = 0; i < n; i++)
+    {
+        result[i] = 0.0f;
+    }
+    uint32_t signal_base_freq = 20 * 1000, sample_freq = (1 << 10) * 1e3;
+    double period = 1e-6;
+    float coefs[5] = {1, 0.3, 0.1, 0.2, 0.05};
+    float phase[5] = {0, 0.02, 0.03, 0.09, 0};
+    for (int j = 0; j < 5; j++)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            result[i] += coefs[j] * sin(pi2 * signal_base_freq * (j + 1) * (i / n * period) + phase[j]);
+        }
+    }
+    UART_Draw_Curve(result, n);
+    free(result);
+}
+
 void app_main(void)
 {
     result = (uint8_t*)malloc(sizeof(uint16_t) * n);
@@ -76,9 +101,11 @@ void app_main(void)
     wifi_sta_init(n);
     TCP_Server_Start();
     ADC_Start();
+    // UART_Init();
     while (1)
     {
         First_Sample();
+        // test_draw();
         vTaskDelay(8000);
     }
     free(result);

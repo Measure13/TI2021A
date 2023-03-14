@@ -409,6 +409,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/UART_HMI/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/esp-idf/WiFi/cmake_install.cmake")
 endif()
 

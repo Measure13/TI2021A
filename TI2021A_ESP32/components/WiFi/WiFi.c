@@ -232,15 +232,15 @@ void TCP_Send(complex* p)
     int i;
     static const char* TAG = "Send";
     ESP_LOGI(TAG, "In sending...%d", num);
-    int to_write = num;
-    send_buf_p = (float*)malloc(sizeof(float) * num);
+    int to_write = num * sizeof(float);
+    send_buf_p = (float*)malloc(to_write);
     for (i = 0; i < num; i++)
     {
         send_buf_p[i] = norm(p[i]);
         ESP_LOGI(TAG, "Msg:%f", send_buf_p[i]);
     }
     while (to_write > 0){
-        int written = send(sock, send_buf_p + (num - to_write), to_write, 0);
+        int written = send(sock, send_buf_p + (num * sizeof(float) - to_write), to_write, 0);
         if (written < 0) {
             ESP_LOGE(TAG, "Error occurred during sending: errno %d", errno);
         }

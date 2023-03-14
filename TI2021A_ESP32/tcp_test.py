@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 
 PORT = 3333
 sock:socket.socket = None
+voltage = np.zeros(1024, np.float32)
+last_time = 0
 
 def tcp_client_init(address):
     global sock
@@ -33,7 +35,14 @@ if __name__ == "__main__":
         res = tcp_client_init(sys.argv[1])
         if res:
             while True:
-                data = sock.recv(2048)
+                data = sock.recv(4096)
+                print(f"data:{data}")
                 if (data_len := len(data)) > 0:
+                    print(f"data_len:{data_len}")
                     for i in range(0, data_len, 4):
-                        print(struct.unpack("!f", data[i:i + 4][::-1])[0])#[::-1]
+                        voltage[last_time + i // 4] = struct.unpack("!f", data[i:i + 4][::-1])[0]
+                last_time += data_len // 4
+                if (last_time >= 1024):
+                    break
+            plt.plot(np.arange(last_time), voltage)
+            plt.show()

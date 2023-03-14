@@ -62,4 +62,5 @@ $<TARGET_FILE:__idf_main>
 $<TARGET_FILE:__idf_protocol_examples_common>
 $<TARGET_FILE:__idf_ADC>
 $<TARGET_FILE:__idf_FFT>
+$<TARGET_FILE:__idf_UART_HMI>
 $<TARGET_FILE:__idf_WiFi>
