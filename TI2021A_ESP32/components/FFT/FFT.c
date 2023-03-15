@@ -65,3 +65,18 @@ float norm(complex c)
     return sqrtf(powf(c.real, 2.0f) + powf(c.imag, 2.0f));
 }
 
+void FFT_Get_Norms(complex* cp, float* fp, uint16_t num)
+{
+    for (int i = 0; i < num; ++i)
+    {
+        fp[i] = norm(cp[i]);
+    }
+}
+
+void FFT_Hanning_Window(float* fp, uint16_t num)
+{
+    for (int i = 0; i < num; ++i)
+    {
+        fp[i] *= (1 - cosf(pi2 * i / num)) / 2;
+    }
+}

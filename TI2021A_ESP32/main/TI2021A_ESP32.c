@@ -73,12 +73,13 @@ void First_Sample()
 static void test_draw(void)
 {
     static const float pi2 = 2 * acos(-1.0);
-    result = (float*)malloc(sizeof(float) * n);
+    float* test_results;
+    test_results = (float*)malloc(sizeof(float) * n);
     for (int i = 0; i < n; i++)
     {
-        result[i] = 0.0f;
+        test_results[i] = 0.0f;
     }
-    uint32_t signal_base_freq = 20 * 1000, sample_freq = (1 << 10) * 1e3;
+    uint32_t signal_base_freq = 20 * 1000;
     double period = 1e-6;
     float coefs[5] = {1, 0.3, 0.1, 0.2, 0.05};
     float phase[5] = {0, 0.02, 0.03, 0.09, 0};
@@ -86,16 +87,16 @@ static void test_draw(void)
     {
         for (int i = 0; i < n; i++)
         {
-            result[i] += coefs[j] * sin(pi2 * signal_base_freq * (j + 1) * (i / n * period) + phase[j]);
+            test_results[i] += coefs[j] * sin(pi2 * signal_base_freq * (j + 1) * (i / n * period) + phase[j]);
         }
     }
-    UART_Draw_Curve(result, n);
-    free(result);
+    UART_Draw_Curve(test_results, n);
+    free(test_results);
 }
 
 void app_main(void)
 {
-    result = (uint8_t*)malloc(sizeof(uint16_t) * n);
+    result = (uint8_t*)malloc(sizeof(uint8_t) * n * 2);
     result[0] = 0;
     ADC_Init(freq, n);
     wifi_sta_init(n);
