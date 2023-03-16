@@ -1,7 +1,8 @@
-import struct
-import numpy as np
+# import struct
+# import numpy as np
 
-a = np.array([3, 8, 9, 0, 7, 6, 0, 0, 0])
+a = eval(input("请输入："))
+print(type(a))
 
 # a = np.array([1.0, 2.0], np.float32)
 # a = 5

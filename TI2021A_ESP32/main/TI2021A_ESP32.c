@@ -14,11 +14,13 @@ extern int COMPLEX_SIZE;
 static int i;
 static uint8_t* result;
 static complex* fn;
+static float* norms;
 static uint32_t ret_num = 0;
 static int temp, argmax = 0;
 static float normmax, tempnorm;
 static const int n = 1 << 10;
-static int freq = n * 1000;
+static int freq_interval = 1100;
+static int freq = n * freq_interval;
 static const uint8_t adc_bytes = 2;
 
 // static TaskHandle_t s_task_handle;
@@ -35,6 +37,7 @@ void First_Sample()
     ret = ADC_Read_Raw(n, result, &ret_num);
     if (ret == ESP_OK) {
         fn = (complex*)malloc(COMPLEX_SIZE * n);
+        norms = (float*)malloc(sizeof(float) * n);
         for (i = 0; i < ret_num; i += adc_bytes) {
             ESP_ERROR_CHECK(ADC_Read_Cal(&result[i], &temp));
             fn[i / 2].real = (float)temp;
@@ -45,25 +48,28 @@ void First_Sample()
                 // vTaskDelay(1);
             // }
         }
+        // FFT_Hanning_Window(fn, n);
         FFT(fn, n);
-        normmax = 0;
-        for (i = 0; i < n; ++i)
-        {
-            tempnorm = norm(fn[i]);
-            // ESP_LOGI(TAG, "FFT:%f", tempnorm);
-            if (normmax < tempnorm)
-            {
-                normmax = tempnorm;
-                argmax = i;
-            }
-            if (i == 1 << 7)
-            {
-                vTaskDelay(1);
-            }
-        }
-        ESP_LOGI(TAG, "max norm:%f, max arg:%d", normmax, argmax);
-        TCP_Send(fn);
+        FFT_Get_Norms(fn, norms, n);
+        // normmax = 0;
+        // for (i = 0; i < n; ++i)
+        // {
+        //     tempnorm = norms[i];
+        //     // ESP_LOGI(TAG, "FFT:%f", tempnorm);
+        //     if (normmax < tempnorm)
+        //     {
+        //         normmax = tempnorm;
+        //         argmax = i;
+        //     }
+        //     if (i == n >> 2)
+        //     {
+        //         vTaskDelay(1);
+        //     }
+        // }
+        // ESP_LOGI(TAG, "max norm:%f, max arg:%d", normmax, argmax);
+        TCP_Send(norms);
         free(fn);
+        free(norms);
     }
     else if (ret == ESP_ERR_TIMEOUT) {
         ESP_LOGE(TAG, "Time out!");
@@ -103,12 +109,12 @@ void app_main(void)
     TCP_Server_Start();
     ADC_Start();
     // UART_Init();
-    while (1)
-    {
+    // while (1)
+    // {
         First_Sample();
         // test_draw();
-        vTaskDelay(8000);
-    }
+        // vTaskDelay(8000);
+    // }
     free(result);
     TCP_Close();
     ADC_Stop();

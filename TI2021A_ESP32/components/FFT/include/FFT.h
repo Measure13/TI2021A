@@ -23,7 +23,7 @@ complex csub(complex c1, complex c2);
 complex cmul(complex c1, complex c2);
 float norm(complex c);
 void FFT_Get_Norms(complex* cp, float* fp, uint16_t num);
-void FFT_Hanning_Window(float* fp, uint16_t num);
+void FFT_Hanning_Window(complex* cp, uint16_t num);
 
 #endif // #ifdef __cplusplus
 

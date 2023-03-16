@@ -12,6 +12,6 @@ esp_err_t wifi_sta_init(int n);
 void TCP_Server_Start();
 esp_err_t tcp_client_write();
 void TCP_Close();
-void TCP_Send(complex* p);
+void TCP_Send(float* p);
 
 #endif

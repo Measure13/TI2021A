@@ -73,10 +73,10 @@ void FFT_Get_Norms(complex* cp, float* fp, uint16_t num)
     }
 }
 
-void FFT_Hanning_Window(float* fp, uint16_t num)
+void FFT_Hanning_Window(complex* cp, uint16_t num)
 {
     for (int i = 0; i < num; ++i)
     {
-        fp[i] *= (1 - cosf(pi2 * i / num)) / 2;
+        cp[i].real *= (1 - cosf(pi2 * i / num)) / 2;
     }
 }
