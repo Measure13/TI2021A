@@ -1,21 +1,26 @@
-# import struct
-# import numpy as np
+import numpy as np
+import matplotlib.pyplot as plt
 
-a = eval(input("请输入："))
-print(type(a))
+real_freq = np.array([100, 78, 89, 53, 41, 33, 67, 12, 16, 10, 22, 27, 33])
+repo_freq = np.array([122, 95, 109, 65, 50, 40, 82, 15, 20, 12, 27, 33, 40])
+k = np.polyfit(real_freq, repo_freq, 1)
+print(k)
+pol = np.poly1d(k)
 
-# a = np.array([1.0, 2.0], np.float32)
-# a = 5
-# l = list("qwertyuiopasdfghjklzxcvbnm12")
-# for i in range(len(l) - 1, -1, -4):
-#     # print(l[i:i - 4:-1], i)
-#     print(l[3:0:-1])
-# l = l[::-1]
-# for i in range(0, len(l), 4):
-#     print(l[i:i + 4])
+plt.scatter(real_freq, repo_freq)
+plt.plot(real_freq, pol(real_freq))
+plt.show()
 
-# print(b := struct.pack("i", a))
-# # for byte in b:
-# #     print(byte)
-# print(b[::-1])
-# print(struct.unpack("!i", b)[0])
+# 100   122
+# 78    95
+# 89    109
+# 53    65
+# 41    50
+# 33    40
+# 67    82
+# 12    15
+# 16    20(19)
+# 10    12
+# 22    27
+# 27    33
+# 33    40

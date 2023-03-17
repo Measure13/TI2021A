@@ -45,6 +45,27 @@ void ADC_Set_Flag_Done()
     flag_done = false;
 }
 
+void ADC_Freq_Config(int freq)
+{
+    static const char* TAG = "ADC_Freq_Cfg";
+
+    adc_digi_pattern_config_t adc_pattern_cfg = {
+        .atten = ADC_ATTEN,
+        .channel = ADC_CHANNEL_7,
+        .unit = ADC_UNIT,
+        .bit_width = ADC_BIT_WIDTH,
+    };
+    adc_continuous_config_t adc_cfg = {
+        .pattern_num = 1,
+        .adc_pattern = &adc_pattern_cfg,
+        .sample_freq_hz = freq,
+        .conv_mode = ADC_CONV_SINGLE_UNIT_1,
+        .format = ADC_DIGI_OUTPUT_FORMAT_TYPE1,
+    };
+    ESP_ERROR_CHECK(adc_continuous_config(handle, &adc_cfg));
+    ESP_LOGI(TAG, "freq to:%lu", adc_cfg.sample_freq_hz);
+}
+
 void ADC_Init(int freq, int num)
 {
     const char* TAG = "ADCInit";
@@ -98,14 +119,15 @@ esp_err_t ADC_Deinit()
 
 void ADC_Start()
 {
-    ESP_ERROR_CHECK(adc_continuous_start(handle));
     ESP_LOGI("ADC", "ADC Start done");
+    ESP_ERROR_CHECK(adc_continuous_start(handle));
 }
 
 void ADC_Stop()
 {
-    ESP_ERROR_CHECK(adc_continuous_stop(handle));
     ESP_LOGI("ADC", "ADC stop done");
+    ESP_ERROR_CHECK(adc_continuous_stop(handle));
+    
 }
 
 esp_err_t ADC_Read_Raw(int n, uint8_t* result, uint32_t* ret_num)
