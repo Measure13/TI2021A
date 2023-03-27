@@ -10,109 +10,15 @@
 #include "UART_HMI.h"
 
 
-#define EX_UART_NUM UART_NUM_0
-#define PATTERN_CHR_NUM    (3)         /*!< Set the number of consecutive and identical characters received by receiver which defines a UART pattern*/
-// RX GPIO28
-// TX GPIO29
+#define EX_UART_NUM UART_NUM_2
 #define BUF_SIZE (1024)
 #define RD_BUF_SIZE (BUF_SIZE)
-static QueueHandle_t uart0_queue;
-static bool ready_to_receive = false;
-static bool ready_to_draw = false;
-
-static void UART_Read_Reply(void* pvParameters)
-{
-    static const char* TAG = "UART_Read";
-    uart_event_t event;
-    size_t buffered_size;
-    uint8_t* dtmp = (uint8_t*) malloc(RD_BUF_SIZE);
-    const char ready[2] = {0xFE, 0x00};
-    const char drawing[2] = {0xFD, 0x00};
-    while (1)
-    {
-        //Waiting for UART event.
-        if(xQueueReceive(uart0_queue, (void * )&event, (TickType_t)portMAX_DELAY)) {
-            bzero(dtmp, RD_BUF_SIZE);
-            ESP_LOGI(TAG, "uart[%d] event:", EX_UART_NUM);
-            switch(event.type) {
-                //Event of UART receving data
-                /*We'd better handler data event fast, there would be much more data events than
-                other types of events. If we take too much time on data event, the queue might
-                be full.*/
-                case UART_DATA:
-                    ESP_LOGI(TAG, "[UART DATA]: %d", event.size);
-                    uart_read_bytes(EX_UART_NUM, dtmp, event.size, portMAX_DELAY);
-                    if (strcmp(ready, (const char*)dtmp))
-                    {
-                        ready_to_receive = true;
-                    }
-                    else if (strcmp(drawing, (const char*)dtmp))
-                    {
-                        ready_to_draw = true;
-                    }
-                    break;
-                //Event of HW FIFO overflow detected
-                case UART_FIFO_OVF:
-                    ESP_LOGI(TAG, "hw fifo overflow");
-                    // If fifo overflow happened, you should consider adding flow control for your application.
-                    // The ISR has already reset the rx FIFO,
-                    // As an example, we directly flush the rx buffer here in order to read more data.
-                    uart_flush_input(EX_UART_NUM);
-                    xQueueReset(uart0_queue);
-                    break;
-                //Event of UART ring buffer full
-                case UART_BUFFER_FULL:
-                    ESP_LOGI(TAG, "ring buffer full");
-                    // If buffer full happened, you should consider encreasing your buffer size
-                    // As an example, we directly flush the rx buffer here in order to read more data.
-                    uart_flush_input(EX_UART_NUM);
-                    xQueueReset(uart0_queue);
-                    break;
-                //Event of UART RX break detected
-                case UART_BREAK:
-                    ESP_LOGI(TAG, "uart rx break");
-                    break;
-                //Event of UART parity check error
-                case UART_PARITY_ERR:
-                    ESP_LOGI(TAG, "uart parity error");
-                    break;
-                //Event of UART frame error
-                case UART_FRAME_ERR:
-                    ESP_LOGI(TAG, "uart frame error");
-                    break;
-                //UART_PATTERN_DET
-                case UART_PATTERN_DET:
-                    uart_get_buffered_data_len(EX_UART_NUM, &buffered_size);
-                    int pos = uart_pattern_pop_pos(EX_UART_NUM);
-                    ESP_LOGI(TAG, "[UART PATTERN DETECTED] pos: %d, buffered size: %d", pos, buffered_size);
-                    if (pos == -1) {
-                        // There used to be a UART_PATTERN_DET event, but the pattern position queue is full so that it can not
-                        // record the position. We should set a larger queue size.
-                        // As an example, we directly flush the rx buffer here.
-                        uart_flush_input(EX_UART_NUM);
-                    } else {
-                        uart_read_bytes(EX_UART_NUM, dtmp, pos, 100 / portTICK_PERIOD_MS);
-                        uint8_t pat[PATTERN_CHR_NUM + 1];
-                        memset(pat, 0, sizeof(pat));
-                        uart_read_bytes(EX_UART_NUM, pat, PATTERN_CHR_NUM, 100 / portTICK_PERIOD_MS);
-                        ESP_LOGI(TAG, "read data: %s", dtmp);
-                        ESP_LOGI(TAG, "read pat : %s", pat);
-                    }
-                    break;
-                //Others
-                default:
-                    ESP_LOGI(TAG, "uart event type: %d", event.type);
-                    break;
-            }
-        }
-    }
-    
-}
+const int special_cmd_len = 4;
 
 void UART_Init(void)
 {
     uart_config_t uart_config = {
-        .baud_rate = 115200,
+        .baud_rate = 9600,
         .data_bits = UART_DATA_8_BITS,
         .parity = UART_PARITY_DISABLE,
         .stop_bits = UART_STOP_BITS_1,
@@ -120,63 +26,126 @@ void UART_Init(void)
         .source_clk = UART_SCLK_DEFAULT,
     };
 
-    //Install UART driver, and get the queue.
-    uart_driver_install(EX_UART_NUM, BUF_SIZE * 2, BUF_SIZE * 2, 20, &uart0_queue, 0);
-    uart_param_config(EX_UART_NUM, &uart_config);
+    //Install UART driver.
+    ESP_ERROR_CHECK(uart_driver_install(EX_UART_NUM, BUF_SIZE * 2, BUF_SIZE * 2, 0, NULL, 0));
+    ESP_ERROR_CHECK(uart_param_config(EX_UART_NUM, &uart_config));
 
     //Set UART pins (using UART0 default pins ie no changes.)
-    uart_set_pin(EX_UART_NUM, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
+    ESP_ERROR_CHECK(uart_set_pin(EX_UART_NUM, 17, 16, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
 
-    //Set uart pattern detect function.
-    uart_enable_pattern_det_baud_intr(EX_UART_NUM, '+', PATTERN_CHR_NUM, 9, 0, 0);
-    //Reset the pattern queue length to record at most 20 pattern positions.
-    uart_pattern_queue_reset(EX_UART_NUM, 20);
-
-    //Create a task to handler UART event from ISR
-    xTaskCreate(UART_Read_Reply, "UART Read Reply", 2048, NULL, 12, NULL);
 }
 
-void UART_Draw_Curve(float* pf, uint16_t num)
+int UART_Read_Data(char* data_pointer)
+{
+    static const char* TAG = "UART Read";
+
+    int read_data_size = 0;
+    while (1) {
+        // Read data from the UART
+        read_data_size = uart_read_bytes(EX_UART_NUM, data_pointer, (BUF_SIZE - 1), 200 / portTICK_PERIOD_MS);
+        if (read_data_size != -1) {
+            if (read_data_size > 0)
+            {
+                data_pointer[read_data_size] = '\0';
+                ESP_LOGI(TAG, "Recv str: %s", (char *) data_pointer);
+                return read_data_size;
+            }
+            else{
+                ESP_LOGE(TAG, "Time out!");
+                ESP_ERROR_CHECK(ESP_FAIL);
+            }
+        }
+    }
+}
+
+int UART_Write_Data(char* data_pointer, int data_len)
+{
+    static const char* TAG = "UART Write";
+
+    int len = uart_write_bytes(EX_UART_NUM, (const char*) data_pointer, data_len);
+    if (len == -1)
+    {
+        return ESP_FAIL;
+        ESP_ERROR_CHECK(ESP_FAIL);
+    }
+    else{
+        return len;
+    }
+}
+
+static int UARTHMI_Append_Ending(char* dest)
+{
+    const int ending_len = 3;
+    const char ending[3] = {0xFF, 0xFF, 0xFF};
+    int dest_end_index = strlen(dest);
+
+    for (int i = 0; i < ending_len; i++)
+    {
+        dest[dest_end_index++] = ending[i];
+    }
+    return dest_end_index;
+}
+
+static esp_err_t UARTHMI_Check_Return_Data(char* cmp, char* data_tmp_read)
+{
+    static const char* TAG = "UARTHMI_Check";
+    if (!strncmp(cmp, (const char*)data_tmp_read, special_cmd_len))
+    {
+        ESP_LOGI(TAG, "Check OK!");
+        return ESP_OK;
+    }
+    else{
+        ESP_LOGE(TAG, "%x %x %x %x", data_tmp_read[0], data_tmp_read[1], data_tmp_read[2], data_tmp_read[3]);
+        return ESP_FAIL;
+    }
+}
+
+void UARTHMI_Draw_Curve_addt(float* pf, uint16_t num)
 {
     static const char* TAG = "UART_Draw";
-    char START_TRANS[22] = "addt s0.id,0,";
+    char START_TRANS[30] = "addt s0.id,0,";
     char numstr[7];
-    int i;
-    int argmax = 0;
-    float max_vol = pf[0], coef = 0;
-    sprintf(numstr, "%d\n", num);
+    const char ready[4] = {0xFE, 0xFF, 0xFF, 0xFF};
+    const char drawing[4] = {0xFD, 0xFF, 0xFF, 0xFF};
+    static const int MAX_SEND_LEN = 255;
+    static const int MAX_SEND_DATA = 240;
+    char* data_tmp_read = (char*)malloc(RD_BUF_SIZE + 1); // for read
+    char data_tmp_write; //for write
+    int i, data_len, total_num, send_num, interval_num;
+    float max_vol = pf[0], coef = 0, min_vol = pf[0];
+
+    total_num = num;
+    interval_num = num / MAX_SEND_LEN;
+    send_num = num / interval_num;
+
+    //max num:256
+    sprintf(numstr, "%d", send_num);
     strcat(START_TRANS, numstr);
-    uart_write_bytes(EX_UART_NUM, (const char*) START_TRANS, sizeof(START_TRANS));
-    ESP_LOGI(TAG, "write done, size:%d", sizeof(START_TRANS));
+    data_len = UARTHMI_Append_Ending(START_TRANS);
+    data_len = UART_Write_Data(START_TRANS, data_len);
+    ESP_LOGI(TAG, "write done, size:%d", data_len);
+    data_len = UART_Read_Data(data_tmp_read);
+    ESP_ERROR_CHECK(UARTHMI_Check_Return_Data(ready, data_tmp_read));
+    ESP_LOGI(TAG, "start send points:%d", send_num);
 
-    while (!ready_to_receive)
-    {
-        
-    }
-    ready_to_receive = false;
-    ESP_LOGI(TAG, "start send points:%d", num);
-
-    for (i = 1; i < num; i++)
+    for (i = 0; i < total_num; i += interval_num)
     {
         if (max_vol < pf[i])
         {
             max_vol = pf[i];
-            argmax = i;
+        }
+        if (min_vol > pf[i])
+        {
+            min_vol = pf[i];
         }
     }
-    coef = 250 / max_vol;
-    for (i = 0; i < num; i++)
+    coef = MAX_SEND_DATA / max_vol;
+    for (i = 0; i < total_num; i += interval_num)
     {
-        memset(numstr, 0x00, sizeof(numstr));
-        sprintf(numstr, "%d\n", (int)(pf[i] * coef));
-        uart_write_bytes(EX_UART_NUM, (const char*) numstr, sizeof(numstr));
+        data_tmp_write = (uint8_t)((pf[i] - min_vol) * coef);
+        UART_Write_Data(&data_tmp_write, 1);
     }
     ESP_LOGI(TAG, "Send done");
-
-    while (!ready_to_draw)
-    {
-        
-    }
-    ready_to_draw = false;
-    ESP_LOGI(TAG, "draw done");
+    data_len = UART_Read_Data(data_tmp_read);
+    ESP_ERROR_CHECK(UARTHMI_Check_Return_Data(drawing, data_tmp_read));
 }

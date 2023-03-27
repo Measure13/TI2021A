@@ -1,12 +1,8 @@
 #include "ADC.h"
 #include "esp_log.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
 #include "esp_adc/adc_cali.h"
 #include "esp_adc/adc_cali_scheme.h"
 #include "esp_adc/adc_continuous.h"
-
-// static esp_err_t ret;
 
 static const int ADC_UNIT       = ADC_UNIT_1;
 static const int ADC_ATTEN      = ADC_ATTEN_DB_11;
@@ -16,33 +12,26 @@ static bool flag_done = false;
 
 static adc_continuous_handle_cfg_t adc_cfg_handle;
 static adc_continuous_handle_t handle = NULL;
-// static TaskHandle_t* s_task_handle;
+static TaskHandle_t s_task_handle;
 static adc_digi_output_data_t *p = NULL;
 static adc_cali_handle_t cali_handle;
 
-// static bool IRAM_ATTR s_conv_done_cb(adc_continuous_handle_t handle, const adc_continuous_evt_data_t *edata, void *user_data)
-// {
-//     BaseType_t mustYield = pdFALSE;
-//     //Notify that ADC continuous driver has done enough number of conversions
-//     vTaskNotifyGiveFromISR(*s_task_handle, &mustYield);
-
-//     return (mustYield == pdTRUE);
-// }
-
-static bool ADC_Read_Done(adc_continuous_handle_t handle, const adc_continuous_evt_data_t *edata, void *user_data)
+static bool IRAM_ATTR ADC_Read_Done_IRAM(adc_continuous_handle_t handle, const adc_continuous_evt_data_t *edata, void *user_data)
 {
-    flag_done = true;
-    return (flag_done == false);
+    BaseType_t mustYield = pdFALSE;
+    //Notify that ADC continuous driver has done enough number of conversions
+    vTaskNotifyGiveFromISR(s_task_handle, &mustYield);
+
+    return (mustYield == pdTRUE);
 }
 
-bool ADC_Get_Flag_Done()
+void ADC_Wait_Results()
 {
-    return flag_done;
-}
+    s_task_handle = xTaskGetCurrentTaskHandle();
+    ADC_Start();
 
-void ADC_Set_Flag_Done()
-{
-    flag_done = false;
+    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    ESP_LOGI("ADC_Wait", "ADC Sample done");
 }
 
 void ADC_Freq_Config(int freq)
@@ -93,13 +82,11 @@ void ADC_Init(int freq, int num)
     ESP_ERROR_CHECK(adc_continuous_config(handle, &adc_cfg));
     ESP_LOGI(TAG, "sample freq hz:%lu", adc_cfg.sample_freq_hz);
 
-    //out_handle = &adc_cfg_handle;
-
     adc_continuous_evt_cbs_t cbs = {
-        .on_conv_done = ADC_Read_Done,
+        .on_conv_done = ADC_Read_Done_IRAM,
     };
     ESP_ERROR_CHECK(adc_continuous_register_event_callbacks(handle, &cbs, NULL));
-    ESP_LOGI(TAG, "s_conv_done_cb:Done");
+    ESP_LOGI(TAG, "ADC_Read_Done_IRAM:Done");
 
     adc_cali_line_fitting_config_t cali_config = {
         .unit_id = ADC_UNIT,
@@ -113,20 +100,18 @@ void ADC_Init(int freq, int num)
 esp_err_t ADC_Deinit()
 {
     ESP_ERROR_CHECK(adc_continuous_deinit(handle));
-    ESP_LOGI("ADC", "ADC deinit done");
     return ESP_OK;
 }
 
 void ADC_Start()
 {
-    ESP_LOGI("ADC", "ADC Start done");
     ESP_ERROR_CHECK(adc_continuous_start(handle));
 }
 
 void ADC_Stop()
 {
-    ESP_LOGI("ADC", "ADC stop done");
     ESP_ERROR_CHECK(adc_continuous_stop(handle));
+    ESP_LOGI("ADC", "ADC stop done");
     
 }
 
