@@ -49,8 +49,8 @@ void First_Sample()
         // FFT_Hanning_Window(fn, n);
         FFT_Get_Norms(fn, norms, n);
         UARTHMI_Draw_Curve_addt(norms, n);
+        TCP_Send(norms);
         FFT(fn, n);
-        // TCP_Send(norms);
         normmax = 0;
         for (i = 3; i < (int)(100 * 1000 / freq_interval + 1); ++i)
         {
@@ -139,6 +139,7 @@ void app_main(void)
     result = (uint8_t*)malloc(sizeof(uint8_t) * n * 2);
     result[0] = 0;
     freq = n * freq_interval;
+    // freq = 1500 * 1000;
     ADC_Init(freq, n);
     
     //! UART_Init will harm wifi_sta_init, WiFi should be init first
