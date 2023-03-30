@@ -37,3 +37,4 @@ ti2021a_stm32_adc\adc.o: D:\Softwares\Keil5\ARM\ARM_Compiler_5.06u7\Bin\..\inclu
 ti2021a_stm32_adc\adc.o: D:\Softwares\Keil5\ARM\ARM_Compiler_5.06u7\Bin\..\include\stdio.h
 ti2021a_stm32_adc\adc.o: D:\Softwares\Keil5\ARM\ARM_Compiler_5.06u7\Bin\..\include\stdlib.h
 ti2021a_stm32_adc\adc.o: ../Core/Inc/usart.h
+ti2021a_stm32_adc\adc.o: D:\Softwares\Keil5\ARM\ARM_Compiler_5.06u7\Bin\..\include\stdbool.h

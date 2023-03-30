@@ -26,8 +26,8 @@
 #define UART_RX_BUF_SIZE 1024
 extern int adc_freq;
 
-static char uart1_rx_bp[UART_RX_BUF_SIZE * 2];
-static char uart1_tx_bp[UART_RX_BUF_SIZE * 2];
+static uint8_t uart1_rx_bp[UART_RX_BUF_SIZE * 2];
+static uint8_t uart1_tx_bp[UART_RX_BUF_SIZE * 2];
 static uint8_t uart1_rx_cnt = 0;
 static uint8_t uart1_tx_cnt = 0;
 static uint8_t uart1_rx_buf = 0;
@@ -133,7 +133,7 @@ int fputc(int ch, FILE *stream)
 	return ch;
 }
 
-void UART_RX_Data_Parse(char* p, uint8_t cnt)
+void UART_RX_Data_Parse(uint8_t* p, uint8_t cnt)
 {
 	adc_freq = 0;
 	for (int i = 0; i < 4; ++i)
@@ -157,7 +157,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(huart);
  
-	if(uart1_rx_cnt >= UART_RX_BUF_SIZE)  //????????¡è???
+	if(uart1_rx_cnt >= UART_RX_BUF_SIZE)
 	{
 		uart1_rx_cnt = 0;
 		memset(uart1_rx_bp, 0x00, sizeof(uart1_rx_bp));
@@ -168,33 +168,43 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	{
 		uart1_rx_bp[uart1_rx_cnt++] = uart1_rx_buf;
 	
-		if((uart1_rx_cnt > 3)&&(uart1_rx_bp[uart1_rx_cnt-1] == 0xFF)&&(uart1_rx_bp[uart1_rx_cnt-2] == 0xFF)&&(uart1_rx_bp[uart1_rx_cnt-3] == 0xFF)) //??¡è?????????????
+		if((uart1_rx_cnt > 3)&&(uart1_rx_bp[uart1_rx_cnt-1] == 0xFF)&&(uart1_rx_bp[uart1_rx_cnt-2] == 0xFF)&&(uart1_rx_bp[uart1_rx_cnt-3] == 0xFF))
 		{
 			UART_RX_Data_Parse(uart1_rx_bp, uart1_rx_cnt);
-			// HAL_UART_Transmit(&huart1, (uint8_t *)&uart1_tx_bp, uart1_tx_cnt, 0xFFFF); //?¡ã??????¡ã??????????????????????????
-			while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX);
-			printf("\nusart adc freq:%d\n", adc_freq);
+			// printf("usart adc freq:%d\n", adc_freq);
 			uart1_rx_cnt = 0;
 			memset(uart1_rx_bp, 0x00, sizeof(uart1_rx_bp));
-			NVIC_EnableIRQ(ADC_IRQn);
+			HAL_ADC_Start_IT(&hadc1);
 		}
 	}
-	
 	HAL_UART_Receive_IT(&huart1, (uint8_t *)&uart1_rx_buf, 1);
 }
 
 void USART_Conv_Data(uint16_t* adc_data_p, uint16_t length)
 {
-	uart1_tx_cnt = length;
+	uart1_tx_cnt = length * 2;
 	for (int i = 0; i < length; ++i)
 	{
 		uart1_tx_bp[i * 2] = ((uint8_t)(adc_data_p[i])) & 0xff;
 		uart1_tx_bp[i * 2 + 1] = ((uint8_t)(adc_data_p[i] >> 8)) & 0x0f;
 	}
-	memset(adc_data_p, 0, sizeof(uint16_t) * length);
-	// printf("here\n");
-	HAL_UART_Transmit(&huart1, (uint8_t *)&uart1_tx_bp, uart1_tx_cnt, 0xFFFF);
-	// printf("here!!!\n");
-	memset(uart1_rx_bp, 0x00, sizeof(uart1_rx_bp));
+	memset(adc_data_p, 0x00, sizeof(uint16_t) * length);
+	// HAL_UART_Transmit(&huart1, uart1_tx_bp, uart1_tx_cnt, 0xFFFF);
+	while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX);
+	memset(uart1_tx_bp, 0x00, sizeof(uart1_tx_bp));
+}
+
+void USART_Send_Data_Direct(uint8_t* data_p, uint16_t data_len)
+{
+	HAL_UART_Transmit(&huart1, data_p, data_len, 0xFFFF);
+	while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX);
+}
+
+void USART_Send_Data_Temp(uint8_t* data_p, uint16_t data_len)
+{
+	strncpy((char*)uart1_tx_bp, (char*)data_p, data_len);
+	HAL_UART_Transmit(&huart1, uart1_tx_bp, uart1_tx_cnt, 0xFFFF);
+	while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX);
+	memset(uart1_tx_bp, 0x00, sizeof(uart1_tx_bp));
 }
 /* USER CODE END 1 */

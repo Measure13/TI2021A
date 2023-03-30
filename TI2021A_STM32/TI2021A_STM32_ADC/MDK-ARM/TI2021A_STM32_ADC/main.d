@@ -37,4 +37,5 @@ ti2021a_stm32_adc\main.o: D:\Softwares\Keil5\ARM\ARM_Compiler_5.06u7\Bin\..\incl
 ti2021a_stm32_adc\main.o: D:\Softwares\Keil5\ARM\ARM_Compiler_5.06u7\Bin\..\include\stdlib.h
 ti2021a_stm32_adc\main.o: ../Core/Inc/adc.h
 ti2021a_stm32_adc\main.o: ../Core/Inc/usart.h
+ti2021a_stm32_adc\main.o: D:\Softwares\Keil5\ARM\ARM_Compiler_5.06u7\Bin\..\include\stdbool.h
 ti2021a_stm32_adc\main.o: ../Core/Inc/gpio.h

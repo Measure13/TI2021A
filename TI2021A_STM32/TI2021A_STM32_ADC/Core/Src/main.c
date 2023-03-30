@@ -47,7 +47,7 @@
 /* USER CODE BEGIN PV */
 // static uint8_t* adc_trans_data_p;
 // static uint16_t actual_data_len = 0;
-const int16_t MAX_DATA_NUM = 10;
+const int16_t MAX_DATA_NUM = 200;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -92,9 +92,7 @@ int main(void)
   MX_ADC1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-	// printf("starting adc dma...\n");
-	HAL_ADC_Start_IT(&hadc1);
-	// printf("start\n");
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -104,8 +102,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		// printf("while!");
-		// HAL_UART_Transmit(&huart1, "666\n", 4, 0xff);
 	}
   /* USER CODE END 3 */
 }
