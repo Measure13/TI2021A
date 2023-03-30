@@ -1,0 +1,1 @@
+ti2021a_stm32_adc\startup_stm32f407xx.o: startup_stm32f407xx.s

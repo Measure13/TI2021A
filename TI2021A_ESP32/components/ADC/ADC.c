@@ -3,6 +3,8 @@
 #include "esp_adc/adc_cali.h"
 #include "esp_adc/adc_cali_scheme.h"
 #include "esp_adc/adc_continuous.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 static const int ADC_UNIT       = ADC_UNIT_1;
 static const int ADC_ATTEN      = ADC_ATTEN_DB_11;

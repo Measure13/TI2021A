@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.m": "matlab",
+        "usart.h": "c",
+        "main.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "delay.h": "c",
+        "stm32f4xx_hal_rcc.h": "c",
+        "stm32f4xx_it.h": "c",
+        "core_cm4.h": "c",
+        "adc.h": "c"
+    }
+}

@@ -2,8 +2,6 @@
 #define __ADC_H__
 
 #include "esp_err.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
 
 void ADC_Init(int freq, int num);
 void ADC_Wait_Results();
