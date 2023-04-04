@@ -37,7 +37,7 @@ extern ADC_HandleTypeDef hadc1;
 
 /* USER CODE BEGIN Private defines */
 extern int adc_freq;
-extern uint16_t* adc_values;
+extern uint16_t adc_values[1024];
 // extern bool adc_going_flag;
 /* USER CODE END Private defines */
 

@@ -47,7 +47,7 @@
 /* USER CODE BEGIN PV */
 // static uint8_t* adc_trans_data_p;
 // static uint16_t actual_data_len = 0;
-const int16_t MAX_DATA_NUM = 1024;
+const uint16_t MAX_DATA_NUM = 1024;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

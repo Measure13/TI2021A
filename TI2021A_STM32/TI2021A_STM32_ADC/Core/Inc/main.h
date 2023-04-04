@@ -61,7 +61,7 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 
 /* USER CODE BEGIN Private defines */
-extern const int16_t MAX_DATA_NUM;
+extern const uint16_t MAX_DATA_NUM;
 // extern int adc_freq = 0;
 /* USER CODE END Private defines */
 

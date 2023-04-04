@@ -22,8 +22,8 @@
 
 /* USER CODE BEGIN 0 */
 int adc_freq = 0;
-uint16_t* adc_values;
-int16_t adc_values_cnt = -1;
+uint16_t adc_values[1024];
+uint16_t adc_values_cnt = 0;
 // bool adc_going_flag = false;
 /* USER CODE END 0 */
 
@@ -34,8 +34,6 @@ void MX_ADC1_Init(void)
 {
 
   /* USER CODE BEGIN ADC1_Init 0 */
-	adc_values = (uint16_t*)malloc(sizeof(uint16_t) * MAX_DATA_NUM);
-	memset(adc_values, 0, MAX_DATA_NUM * sizeof(uint16_t));
 	
   /* USER CODE END ADC1_Init 0 */
 
@@ -138,13 +136,15 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hadc);
-	if (adc_values_cnt == (MAX_DATA_NUM - 1))
+	if (adc_values_cnt == MAX_DATA_NUM)
 	{
 		// USART_Send_Data_Temp("Over\n", 6);
 		USART_Conv_Data(adc_values, MAX_DATA_NUM);
+		adc_values_cnt = 0;
+		free(adc_values);
 		return;
 	}
-	adc_values[++adc_values_cnt] = (&hadc1)->Instance->DR & 0x0fff;
+	adc_values[adc_values_cnt++] = (&hadc1)->Instance->DR & 0x0fff;//
 	HAL_ADC_Start_IT(&hadc1);
 }
 /* USER CODE END 1 */

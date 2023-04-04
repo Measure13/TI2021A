@@ -31,6 +31,8 @@ static uint8_t uart1_tx_bp[UART_RX_BUF_SIZE * 2];
 static uint8_t uart1_rx_cnt = 0;
 static uint8_t uart1_tx_cnt = 0;
 static uint8_t uart1_rx_buf = 0;
+
+static const int batch = 16;
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;
@@ -140,7 +142,7 @@ void UART_RX_Data_Parse(uint8_t* p, uint8_t cnt)
 	{
 		adc_freq += ((p[i] & 0xff) << (8 * i));
 	}
-	memset(uart1_tx_bp, 0x00, sizeof(uart1_tx_bp));
+	memset(uart1_tx_bp, 0x00, sizeof(uint8_t) * UART_RX_BUF_SIZE * 2);
 	// uart1_tx_cnt = 7;
 	// for (int i = 0; i < sizeof(int); ++i)
 	// {
@@ -173,9 +175,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		if((uart1_rx_cnt > 3)&&(uart1_rx_bp[uart1_rx_cnt-3] == 0xFF)&&(uart1_rx_bp[uart1_rx_cnt-2] == 0xFF)&&(uart1_rx_bp[uart1_rx_cnt-1] == 0xFF))
 		{
 			UART_RX_Data_Parse(uart1_rx_bp, uart1_rx_cnt);
-			// printf("usart adc freq:%d\n", adc_freq);
+			// adc_values = (uint16_t*)malloc(sizeof(uint16_t) * MAX_DATA_NUM);
+			
 			uart1_rx_cnt = 0;
-			memset(uart1_rx_bp, 0x00, sizeof(uart1_rx_bp));
+			memset(uart1_rx_bp, 0x00, sizeof(uint8_t) * UART_RX_BUF_SIZE * 2);
 			HAL_ADC_Start_IT(&hadc1);
 		}
 	}
@@ -191,9 +194,9 @@ void USART_Conv_Data(uint16_t* adc_data_p, uint16_t length)
 		uart1_tx_bp[i * 2 + 1] = ((uint8_t)(adc_data_p[i] >> 8)) & 0x0f;
 	}
 	memset(adc_data_p, 0x00, sizeof(uint16_t) * length);
-	for (int i = 0; i < length; ++i)
+	for (int i = 0; i < batch; ++i)
 	{
-		HAL_UART_Transmit(&huart1, uart1_tx_bp + 2 * i, 2, 0xFFFFFFFF);
+		HAL_UART_Transmit(&huart1, uart1_tx_bp + i * UART_RX_BUF_SIZE * 2 / batch, UART_RX_BUF_SIZE * 2 / batch, 0xFFFFFFFF);
 		while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX);
 	}
 	memset(uart1_tx_bp, 0x00, sizeof(uint8_t) * UART_RX_BUF_SIZE * 2);
@@ -210,6 +213,6 @@ void USART_Send_Data_Temp(uint8_t* data_p, uint16_t data_len)
 	strncpy((char*)uart1_tx_bp, (char*)data_p, data_len);
 	HAL_UART_Transmit(&huart1, uart1_tx_bp, uart1_tx_cnt, 0xFFFF);
 	while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX);
-	memset(uart1_tx_bp, 0x00, sizeof(uart1_tx_bp));
+	memset(uart1_tx_bp, 0x00, sizeof(uint8_t) * UART_RX_BUF_SIZE * 2);
 }
 /* USER CODE END 1 */
