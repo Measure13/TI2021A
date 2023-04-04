@@ -141,15 +141,18 @@ void UART_RX_Data_Parse(uint8_t* p, uint8_t cnt)
 		adc_freq += ((p[i] & 0xff) << (8 * i));
 	}
 	memset(uart1_tx_bp, 0x00, sizeof(uart1_tx_bp));
-	uart1_tx_cnt = 7;
-	for (int i = 0; i < sizeof(int); ++i)
-	{
-		uart1_tx_bp[i] = ((adc_freq >> (i * 8))) & 0xff;
-	}
-	for (int i = 4; i < uart1_tx_cnt; ++i)
-	{
-		uart1_tx_bp[i] = 0xff;
-	}
+	// uart1_tx_cnt = 7;
+	// for (int i = 0; i < sizeof(int); ++i)
+	// {
+	// 	uart1_tx_bp[i] = ((adc_freq >> (i * 8))) & 0xff;
+	// }
+	// for (int i = 4; i < uart1_tx_cnt; ++i)
+	// {
+	// 	uart1_tx_bp[i] = 0xff;
+	// }
+	// USART_Send_Data_Direct(uart1_rx_bp, (uint16_t)uart1_rx_cnt);
+	// memset(uart1_tx_bp, 0x00, sizeof(uart1_tx_bp));
+	// uart1_rx_cnt = 0;
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
@@ -162,13 +165,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		uart1_rx_cnt = 0;
 		memset(uart1_rx_bp, 0x00, sizeof(uart1_rx_bp));
 		HAL_UART_Transmit(&huart1, (uint8_t *)"OVERFLOW!!!", 12, 0xFFFF); 	
-				
 	}
 	else
 	{
 		uart1_rx_bp[uart1_rx_cnt++] = uart1_rx_buf;
 	
-		if((uart1_rx_cnt > 3)&&(uart1_rx_bp[uart1_rx_cnt-1] == 0xFF)&&(uart1_rx_bp[uart1_rx_cnt-2] == 0xFF)&&(uart1_rx_bp[uart1_rx_cnt-3] == 0xFF))
+		if((uart1_rx_cnt > 3)&&(uart1_rx_bp[uart1_rx_cnt-3] == 0xFF)&&(uart1_rx_bp[uart1_rx_cnt-2] == 0xFF)&&(uart1_rx_bp[uart1_rx_cnt-1] == 0xFF))
 		{
 			UART_RX_Data_Parse(uart1_rx_bp, uart1_rx_cnt);
 			// printf("usart adc freq:%d\n", adc_freq);
@@ -189,9 +191,12 @@ void USART_Conv_Data(uint16_t* adc_data_p, uint16_t length)
 		uart1_tx_bp[i * 2 + 1] = ((uint8_t)(adc_data_p[i] >> 8)) & 0x0f;
 	}
 	memset(adc_data_p, 0x00, sizeof(uint16_t) * length);
-	// HAL_UART_Transmit(&huart1, uart1_tx_bp, uart1_tx_cnt, 0xFFFF);
-	while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX);
-	memset(uart1_tx_bp, 0x00, sizeof(uart1_tx_bp));
+	for (int i = 0; i < length; ++i)
+	{
+		HAL_UART_Transmit(&huart1, uart1_tx_bp + 2 * i, 2, 0xFFFFFFFF);
+		while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX);
+	}
+	memset(uart1_tx_bp, 0x00, sizeof(uint8_t) * UART_RX_BUF_SIZE * 2);
 }
 
 void USART_Send_Data_Direct(uint8_t* data_p, uint16_t data_len)

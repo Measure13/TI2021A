@@ -35,7 +35,7 @@ void MX_ADC1_Init(void)
 
   /* USER CODE BEGIN ADC1_Init 0 */
 	adc_values = (uint16_t*)malloc(sizeof(uint16_t) * MAX_DATA_NUM);
-	memset(adc_values, 0, MAX_DATA_NUM);
+	memset(adc_values, 0, MAX_DATA_NUM * sizeof(uint16_t));
 	
   /* USER CODE END ADC1_Init 0 */
 
@@ -140,10 +140,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 	UNUSED(hadc);
 	if (adc_values_cnt == (MAX_DATA_NUM - 1))
 	{
-		// HAL_ADC_Stop_IT(&hadc1);
-		// HAL_NVIC_DisableIRQ(ADC_IRQn);
-		// adc_going_flag = false;
-		USART_Conv_Data(adc_values, adc_values_cnt + 1);
+		// USART_Send_Data_Temp("Over\n", 6);
+		USART_Conv_Data(adc_values, MAX_DATA_NUM);
 		return;
 	}
 	adc_values[++adc_values_cnt] = (&hadc1)->Instance->DR & 0x0fff;
