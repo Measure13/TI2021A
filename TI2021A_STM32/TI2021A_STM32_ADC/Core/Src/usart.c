@@ -22,12 +22,13 @@
 
 /* USER CODE BEGIN 0 */
 #include "adc.h"
+#include "tim.h"
 #include <stdio.h>
-#define UART_RX_BUF_SIZE 1024
-extern int adc_freq;
+#define UART_RX_BUF_SIZE 2048 // 1024 * sizeof(uint16_t)
+extern uint32_t adc_freq;
 
-static uint8_t uart1_rx_bp[UART_RX_BUF_SIZE * 2];
-static uint8_t uart1_tx_bp[UART_RX_BUF_SIZE * 2];
+static uint8_t uart1_rx_bp[UART_RX_BUF_SIZE];
+static uint8_t uart1_tx_bp[UART_RX_BUF_SIZE];
 static uint8_t uart1_rx_cnt = 0;
 static uint8_t uart1_tx_cnt = 0;
 static uint8_t uart1_rx_buf = 0;
@@ -142,19 +143,9 @@ void UART_RX_Data_Parse(uint8_t* p, uint8_t cnt)
 	{
 		adc_freq += ((p[i] & 0xff) << (8 * i));
 	}
-	memset(uart1_tx_bp, 0x00, sizeof(uint8_t) * UART_RX_BUF_SIZE * 2);
-	// uart1_tx_cnt = 7;
-	// for (int i = 0; i < sizeof(int); ++i)
-	// {
-	// 	uart1_tx_bp[i] = ((adc_freq >> (i * 8))) & 0xff;
-	// }
-	// for (int i = 4; i < uart1_tx_cnt; ++i)
-	// {
-	// 	uart1_tx_bp[i] = 0xff;
-	// }
-	// USART_Send_Data_Direct(uart1_rx_bp, (uint16_t)uart1_rx_cnt);
-	// memset(uart1_tx_bp, 0x00, sizeof(uart1_tx_bp));
-	// uart1_rx_cnt = 0;
+	memset(uart1_tx_bp, 0x00, sizeof(uint8_t) * UART_RX_BUF_SIZE);
+	// printf("%d\n", adc_freq);
+	// Timer_2_Adjust(adc_freq);
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
@@ -166,7 +157,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	{
 		uart1_rx_cnt = 0;
 		memset(uart1_rx_bp, 0x00, sizeof(uart1_rx_bp));
-		HAL_UART_Transmit(&huart1, (uint8_t *)"OVERFLOW!!!", 12, 0xFFFF); 	
+		USART_Send_Data_Direct("Overflow!!!\n", 13); 	
 	}
 	else
 	{
@@ -175,11 +166,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		if((uart1_rx_cnt > 3)&&(uart1_rx_bp[uart1_rx_cnt-3] == 0xFF)&&(uart1_rx_bp[uart1_rx_cnt-2] == 0xFF)&&(uart1_rx_bp[uart1_rx_cnt-1] == 0xFF))
 		{
 			UART_RX_Data_Parse(uart1_rx_bp, uart1_rx_cnt);
-			// adc_values = (uint16_t*)malloc(sizeof(uint16_t) * MAX_DATA_NUM);
-			
 			uart1_rx_cnt = 0;
-			memset(uart1_rx_bp, 0x00, sizeof(uint8_t) * UART_RX_BUF_SIZE * 2);
-			HAL_ADC_Start_IT(&hadc1);
+			memset(uart1_rx_bp, 0x00, sizeof(uint8_t) * UART_RX_BUF_SIZE);
+			HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
 		}
 	}
 	HAL_UART_Receive_IT(&huart1, (uint8_t *)&uart1_rx_buf, 1);
@@ -188,18 +177,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 void USART_Conv_Data(uint16_t* adc_data_p, uint16_t length)
 {
 	uart1_tx_cnt = length * 2;
-	for (int i = 0; i < length; ++i)
-	{
-		uart1_tx_bp[i * 2] = ((uint8_t)(adc_data_p[i])) & 0xff;
-		uart1_tx_bp[i * 2 + 1] = ((uint8_t)(adc_data_p[i] >> 8)) & 0x0f;
-	}
-	memset(adc_data_p, 0x00, sizeof(uint16_t) * length);
 	for (int i = 0; i < batch; ++i)
 	{
-		HAL_UART_Transmit(&huart1, uart1_tx_bp + i * UART_RX_BUF_SIZE * 2 / batch, UART_RX_BUF_SIZE * 2 / batch, 0xFFFFFFFF);
+		HAL_UART_Transmit(&huart1, (uint8_t*)adc_data_p + i * UART_RX_BUF_SIZE / batch, UART_RX_BUF_SIZE / batch, 0xFFFFFFFF);
 		while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX);
 	}
-	memset(uart1_tx_bp, 0x00, sizeof(uint8_t) * UART_RX_BUF_SIZE * 2);
+	memset(adc_data_p, 0x00, sizeof(uint16_t) * length);
 }
 
 void USART_Send_Data_Direct(uint8_t* data_p, uint16_t data_len)
@@ -213,6 +196,6 @@ void USART_Send_Data_Temp(uint8_t* data_p, uint16_t data_len)
 	strncpy((char*)uart1_tx_bp, (char*)data_p, data_len);
 	HAL_UART_Transmit(&huart1, uart1_tx_bp, uart1_tx_cnt, 0xFFFF);
 	while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX);
-	memset(uart1_tx_bp, 0x00, sizeof(uint8_t) * UART_RX_BUF_SIZE * 2);
+	memset(uart1_tx_bp, 0x00, sizeof(uint8_t) * UART_RX_BUF_SIZE);
 }
 /* USER CODE END 1 */
