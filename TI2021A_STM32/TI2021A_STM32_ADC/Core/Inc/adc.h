@@ -30,14 +30,16 @@ extern "C" {
 
 /* USER CODE BEGIN Includes */
 #include "usart.h"
+#include "tim.h"
+#include "dac.h"
 #include <stdbool.h>
 /* USER CODE END Includes */
 
 extern ADC_HandleTypeDef hadc1;
 
 /* USER CODE BEGIN Private defines */
-extern int adc_freq;
-extern uint16_t adc_values[1024];
+extern uint32_t adc_freq;
+extern uint16_t adc_values[1028];
 // extern bool adc_going_flag;
 /* USER CODE END Private defines */
 
