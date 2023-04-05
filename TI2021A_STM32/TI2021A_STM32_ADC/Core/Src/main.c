@@ -42,7 +42,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-// #define USE_FULL_ASSERT
+
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/

@@ -48,7 +48,7 @@ extern const uint16_t MAX_DATA_NUM;
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-// #define MAX_DATA_NUM 1024
+
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -61,7 +61,7 @@ void Error_Handler_Index(int high);
 /* Private defines -----------------------------------------------------------*/
 
 /* USER CODE BEGIN Private defines */
-// extern int adc_freq = 0;
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

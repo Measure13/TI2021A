@@ -145,7 +145,7 @@ void UART_RX_Data_Parse(uint8_t* p, uint8_t cnt)
 	}
 	memset(uart1_tx_bp, 0x00, sizeof(uint8_t) * UART_RX_BUF_SIZE);
 	// printf("%d\n", adc_freq);
-	// Timer_2_Adjust(adc_freq);
+	Timer_2_Adjust(adc_freq);
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
@@ -179,6 +179,7 @@ void USART_Conv_Data(uint16_t* adc_data_p, uint16_t length)
 	uart1_tx_cnt = length * 2;
 	for (int i = 0; i < batch; ++i)
 	{
+		//! Experimental facts shows that transmit size should be no greater than 128
 		HAL_UART_Transmit(&huart1, (uint8_t*)adc_data_p + i * UART_RX_BUF_SIZE / batch, UART_RX_BUF_SIZE / batch, 0xFFFFFFFF);
 		while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX);
 	}

@@ -24,7 +24,6 @@
 uint32_t adc_freq = 0;
 uint16_t adc_values[1028];
 uint16_t adc_values_cnt = 0;
-// bool adc_going_flag = false;
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc1;
@@ -159,16 +158,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
 	/* Prevent unused argument(s) compilation warning */
 	UNUSED(hadc);
-	// if (adc_values_cnt >= MAX_DATA_NUM)
-	// {
-		HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_2);
-		USART_Conv_Data(adc_values + 4, MAX_DATA_NUM);
-		// adc_values_cnt = 0;
-	// }
-	// else
-	// {
-	// 	// USART_Send_Data_Direct((uint8_t*)adc_values, 2);
-	// 	++adc_values_cnt;
-	// }
+	HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_2);
+	USART_Conv_Data(adc_values + 4, MAX_DATA_NUM);
 }
 /* USER CODE END 1 */

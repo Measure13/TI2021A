@@ -22,7 +22,6 @@
 
 /* USER CODE BEGIN 0 */
 uint32_t timer_period = 63;
-static TIM_OC_InitTypeDef sConfigOC = {0};
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim2;
@@ -32,12 +31,7 @@ void MX_TIM2_Init(void)
 {
 
 	/* USER CODE BEGIN TIM2_Init 0 */
-	// the following code was :
-	/*
-	TIM_ClockConfigTypeDef sClockSourceConfig = {0};
-	TIM_MasterConfigTypeDef sMasterConfig = {0};
-	TIM_OC_InitTypeDef sConfigOC = {0};
-	*/
+	
 	/* USER CODE END TIM2_Init 0 */
 
 	TIM_ClockConfigTypeDef sClockSourceConfig = {0};
@@ -121,20 +115,9 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 /* USER CODE BEGIN 1 */
 void Timer_2_Adjust(uint32_t freq)
 {
-	timer_period = 64 * 1000 * 1000 / freq;
-	if (timer_period < 20)
-	{
-		Error_Handler_Index(50);
-	}
-	htim2.Init.Period = timer_period;
-	sConfigOC.Pulse = timer_period / 2;
-	if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
-	{
-		Error_Handler_Index(100);
-	}
-	if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-	{
-		Error_Handler_Index(150);
-	}
+	timer_period = 64 * 1000 * 1000 / freq - 1;
+	htim2.Instance->ARR = timer_period;
+	htim2.Instance->CCR2 = timer_period / 2;
+	htim2.Instance->EGR = TIM_EGR_UG;
 }
 /* USER CODE END 1 */
