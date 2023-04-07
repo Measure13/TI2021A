@@ -1,8 +1,0 @@
--- The C compiler identification is unknown
--- The CXX compiler identification is unknown
--- The ASM compiler identification is unknown
--- Found assembler: xtensa-esp32-elf-gcc
--- Warning: Did not find file Compiler/-ASM
--- Configuring incomplete, errors occurred!
-See also "D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/CMakeFiles/CMakeOutput.log".
-See also "D:/MyWorks/Programs/Github/TI2021A/TI2021A_ESP32/build/CMakeFiles/CMakeError.log".

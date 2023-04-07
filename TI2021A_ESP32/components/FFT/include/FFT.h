@@ -16,14 +16,14 @@ typedef struct
     float imag;
 }complex;
 
-void FFT(complex* f, int n);
-
-complex cadd(complex c1, complex c2);
-complex csub(complex c1, complex c2);
-complex cmul(complex c1, complex c2);
-float norm(complex c);
-void FFT_Get_Norms(complex* cp, float* fp, uint16_t num);
-void FFT_Hanning_Window(complex* cp, uint16_t num);
+void FFT_Start();
+void FFT_Load_Data(uint16_t* adc_value_p, int n, float** norm_p);
+void FFT_Release_Data();
+void FFT_Get_Norms();
+void FFT_Hanning_Window();
+int FFT_Get_Approximate_Base_Freq(int freq_interval);
+int FFT_Get_Accurate_Base_Freq(int freq_interval);
+void FFT_Get_Normalized_Amp(float* freq_amp_norm, uint8_t order, int freq_interval);
 
 #endif // #ifdef __cplusplus
 

@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <math.h>
+#include <string.h>
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -8,161 +9,107 @@
 #include "ADC.h"
 #include "UART_HMI.h"
 
+/*
+800    500    500    264.7   164.7
+*/
+
 static esp_err_t ret;
 
 extern int COMPLEX_SIZE;
-static int i;
 static uint8_t* result;
-static complex* fn;
 static float* norms;
-static uint32_t ret_num = 0;
-static int temp, base_freq_index = 0;
-static float normmax, tempnorm;
-static const int n = 1 << 10;
 static int freq_interval = 1000;
-static int freq, further_times = 0;
-static const double b = 0.07125531, k = 1.22043663;
+static uint32_t sampling_freq, fft_base_freq;
+static uint8_t further_times = 0, final_times = 2;
+static float freq_amp_norm[5];          //normalized amplitude
+static uint16_t* adc_value_p;
 
-static const uint8_t adc_bytes = 2;
+static const uint8_t HARMONIC_ORDER = 5;
+static const float EXPAND_FACTOR = 1.1f;
+static const int SIGNAL_NUM = 1 << 10;
 
-// static TaskHandle_t task_handle;
-
-void First_Sample()
+void Sample()
 {
-    static const char* TAG = "First_Sample";
-    ADC_Wait_Results();
-    ESP_LOGI(TAG, "ADC Sample done");
-    ret = ADC_Read_Raw(n, result, &ret_num);
-    if (ret == ESP_OK) {
-        fn = (complex*)malloc(COMPLEX_SIZE * n);
-        norms = (float*)malloc(sizeof(float) * n);
-        for (i = 0; i < ret_num; i += adc_bytes) {
-            ESP_ERROR_CHECK(ADC_Read_Cal(&result[i], &temp));
-            fn[i / 2].real = (float)temp;
-            fn[i / 2].imag = 0.0f;
-            // if (i == 0)
-            // {
-                // ESP_LOGI("ADC", "Value: %fmV", fn[i / 2].real); // , %x, p->type1.data
-                // vTaskDelay(1);
-            // }
-        }
-        // FFT_Hanning_Window(fn, n);
-        FFT_Get_Norms(fn, norms, n);
-        UARTHMI_Draw_Curve_addt(norms, n);
-        // TCP_Send(norms);
-        FFT(fn, n);
-        normmax = 0;
-        for (i = 3; i < (int)(100 * 1000 / freq_interval + 1); ++i)
-        {
-            tempnorm = norms[i];
-            if (normmax < tempnorm)
-            {
-                normmax = tempnorm;
-                base_freq_index = i;
-            }
-        }
-        free(fn);
-        free(norms);
-    }
-    else if (ret == ESP_ERR_TIMEOUT) {
-        ESP_LOGE(TAG, "Time out!");
-    }
-    ADC_Stop();
-}
+    static const char* TAG = "Sample";
 
-void Further_Sample()
-{
-    static const char* TAG = "Further_Sample";
+    float distortion_degree = 0;
+
+    if (further_times == 0)
+    {
+        sampling_freq = SIGNAL_NUM * freq_interval;
+    }
+    else
+    {
+        sampling_freq = fft_base_freq * 10 * EXPAND_FACTOR;//10 = 5 *2
+    }
+    freq_interval = sampling_freq / SIGNAL_NUM;
 
     ++further_times;
-    freq = (int)((base_freq_index * k + b) * freq_interval * 11);
-    freq_interval = freq / n;
-    ADC_Freq_Config(freq);
-    ADC_Wait_Results();
-    ret = ADC_Read_Raw(n, result, &ret_num);
-    if (ret == ESP_OK) {
-        fn = (complex*)malloc(COMPLEX_SIZE * n);
-        norms = (float*)malloc(sizeof(float) * n);
-        for (i = 0; i < ret_num; i += adc_bytes) {
-            ESP_ERROR_CHECK(ADC_Read_Cal(&result[i], &temp));
-            fn[i / 2].real = (float)temp;
-            fn[i / 2].imag = 0.0f;
-        }
-        FFT_Hanning_Window(fn, n);
-        FFT(fn, n);
-        FFT_Get_Norms(fn, norms, n);
-        // TCP_Send(norms);
-        normmax = 0;
-        for (i = 1; i < (int)(100 * 1000 / freq_interval + 1); ++i)
-        {
-            tempnorm = norms[i];
-            if (normmax < tempnorm)
-            {
-                normmax = tempnorm;
-                base_freq_index = i;
-            }
-        }
-        ESP_LOGI(TAG, "time:%d, base norm:%f, base freq index:%d", further_times, normmax, base_freq_index);
-        free(fn);
-        free(norms);
-    }
-    else if (ret == ESP_ERR_TIMEOUT) {
-        ESP_LOGE(TAG, "Time out!");
-    }
-    ADC_Stop();
-}
+    ESP_LOGI(TAG, "%d times:freq interval:%d, sampling freq:%lu", further_times, freq_interval, sampling_freq);
 
-static void test_draw(void)
-{
-    static const double pi2 = 2 * acos(-1.0);
-    float* test_results;
-    test_results = (double*)malloc(sizeof(double) * n);
-    for (int i = 0; i < n; i++)
-    {
-        test_results[i] = 0.0f;
-    }
-    double coefs[5] = {1, 0.3, 0.1, 0.2, 0.05};
-    double phase[5] = {0, 0.02, 0.03, 0.09, 0};
-    for (int j = 0; j < 5; j++)
-    {
-        for (int i = 0; i < n; i++)
+    memset(result, 0x00, sizeof(uint8_t) * SIGNAL_NUM * 2);
+    adc_value_p = (uint16_t*)result;
+    ret = UART_Read_ADC(STM_UART_NUM, sampling_freq, result, SIGNAL_NUM);
+    if (ret == ESP_OK) {
+        FFT_Load_Data(adc_value_p, SIGNAL_NUM, &norms);
+        // FFT_Hanning_Window();
+
+        UARTHMI_Draw_Curve_addt(norms, SIGNAL_NUM);
+        if (further_times == 2)
         {
-            test_results[i] += (float)fabs(coefs[j] * sin(pi2 * i / n + phase[j]));//signal_base_freq * (j + 1) * (i / n * period)
+            TCP_Send(norms);//TODO: change this param for better compatibility
         }
+
+        FFT_Start();
+        FFT_Get_Norms();
+
+
+        fft_base_freq = FFT_Get_Accurate_Base_Freq(freq_interval);
+        ESP_LOGI(TAG, "base freq:%lu", fft_base_freq);
+        FFT_Get_Normalized_Amp(freq_amp_norm, HARMONIC_ORDER, freq_interval);
+        for (int i = 0; i < HARMONIC_ORDER; ++i)
+        {
+            ESP_LOGI(TAG, "normalized amp %d: %3f", i, freq_amp_norm[i]);
+        }
+
+        if (further_times == final_times)
+        {
+            for (int i = 0; i < HARMONIC_ORDER; ++i)
+            {
+                UARTHMI_Send_Float(i, freq_amp_norm[i]);
+                if (i > 0)
+                {
+                    distortion_degree += freq_amp_norm[i] * freq_amp_norm[i];
+                }
+            }
+            UARTHMI_Send_Float(HARMONIC_ORDER, sqrtf(distortion_degree));
+
+            TCP_Close();
+        }
+        FFT_Release_Data();
     }
-    UARTHMI_Draw_Curve_addt(test_results, n);
-    free(test_results);
+    else{
+        ESP_ERROR_CHECK(ESP_FAIL);
+    }
 }
 
 void app_main(void)
 {
-    result = (uint8_t*)malloc(sizeof(uint8_t) * n * 2);
-    result[0] = 0;
-    freq = n * freq_interval;
-    freq = 2000 * 1000;
-    ADC_Init(freq, n);
-    // ADC_Wait_Results();
-    // ESP_LOGI("APP_MAIN", "ADC Sample done");
-    // ret = ADC_Read_Raw(n, result, &ret_num);
-    // if (ret == ESP_OK) {
-    //     ESP_LOGI("APP_MAIN", "Done!");
-    // }
+    result = (uint8_t*)(uint16_t*)malloc(sizeof(uint16_t) * SIGNAL_NUM);
+    sampling_freq = SIGNAL_NUM * freq_interval;
     
-    //! UART_Init will harm wifi_sta_init, WiFi should be init first
-    // wifi_sta_init(n);
-    // TCP_Server_Start();
     UART_Init();
-    First_Sample();
+    wifi_sta_init(SIGNAL_NUM);
+    TCP_Server_Start();
     
-    // while (1)
-    // {
-    //     Further_Sample();
-    //     if (further_times > 1)
-    //     {
-    //         break;
-    //     }
-        
-    // }
+    while (1)
+    {
+        Sample();
+        if (further_times >= final_times)
+        {
+            break;
+        }
+    }
     free(result);
-    // TCP_Close();
+    ESP_LOGI("Main", "Done! Did I did a good job?");
 }

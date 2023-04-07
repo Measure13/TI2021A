@@ -2,6 +2,7 @@
   "C_Cpp.intelliSenseEngine": "Tag Parser",
   "files.associations": {
     "*.m": "matlab",
+    "*.asm": "asm-collection",
     "esp_mac.h": "c",
     "esp_wifi.h": "c",
     "esp_event.h": "c",
@@ -14,8 +15,13 @@
     "adc_cali_scheme.h": "c",
     "protocol_examples_common.h": "c",
     "string.h": "c",
-    "*.inc": "c"
+    "*.inc": "c",
+    "math.h": "c"
   },
   "idf.portWin": "COM3",
-  "idf.adapterTargetName": "esp32"
+  "idf.adapterTargetName": "esp32",
+  "idf.openOcdConfigs": [
+    "board/esp32-wrover-kit-3.3v.cfg"
+  ],
+  "idf.flashType": "UART"
 }

@@ -3,14 +3,13 @@ import sys
 import struct
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.fft import fft
+from scipy.fft import fft, ifft
 
 PORT = 3333
 sock:socket.socket = None
 voltage = np.zeros(1024, np.float32)
 last_time = 0
-b = 0.07125531
-k = 1.22043663
+vol = True
 
 def tcp_client_init(address):
     global sock
@@ -19,7 +18,7 @@ def tcp_client_init(address):
         family_addr, socktype, proto, canonname, addr = res
     try:
         sock = socket.socket(family_addr, socket.SOCK_STREAM)
-        sock.settimeout(20.0)
+        sock.settimeout(100.0)
     except socket.error as msg:
         print(f"ERROR {msg[0]}:{msg[1]}")
         raise
@@ -48,6 +47,12 @@ if __name__ == "__main__":
                 if (last_time >= 1024):
                     break
             plt.plot(np.arange(last_time), voltage)
-            np.save("voltage", voltage)
-            plt.plot(((np.arange(last_time) - b) / k).astype(np.int16), np.abs(fft(voltage)))
-            plt.show()
+            if vol:
+                np.save("voltage", voltage)
+                plt.plot(np.arange(last_time), np.abs(fft(voltage)))
+                plt.show()
+            else:
+                np.save("fft", voltage)
+                plt.plot(np.arange(last_time), np.abs(ifft(voltage)))
+                plt.show()
+            

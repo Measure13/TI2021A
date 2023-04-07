@@ -25,13 +25,15 @@ static const char* EXAMPLE_ESP_WIFI_SSID  = "Mxx Wi-Fi";
 static const char* EXAMPLE_ESP_WIFI_PASS  = "Q1:Who you are";
 static const uint8_t EXAMPLE_MAX_STA_CONN       = 1;
 static const uint8_t EXAMPLE_ESP_WIFI_CHANNEL   = 6;
-static const uint8_t WIFI_AUTH_MODE             = WIFI_AUTH_WPA_WPA2_PSK;
+static const uint8_t WIFI_AUTH_MODE             = WIFI_AUTH_WPA2_PSK;
 #endif
 #ifdef STA__
-static const char* EXAMPLE_ESP_WIFI_SSID  = "BirB!";
-static const char* EXAMPLE_ESP_WIFI_PASS  = "BirBishere";
-static const uint8_t WIFI_AUTH_MODE             = WIFI_AUTH_WPA_WPA2_PSK;
-static const int EXAMPLE_ESP_MAXIMUM_RETRY = 200;
+// static const char* EXAMPLE_ESP_WIFI_SSID  = "BirB!";
+// static const char* EXAMPLE_ESP_WIFI_PASS  = "BirBishere";
+#define     EXAMPLE_ESP_WIFI_SSID   "BirB!"
+#define     EXAMPLE_ESP_WIFI_PASS   "BirBishere"
+// static const uint8_t WIFI_AUTH_MODE             = WIFI_AUTH_WPA2_PSK;
+static const int EXAMPLE_ESP_MAXIMUM_RETRY = 20;
 
 static EventGroupHandle_t s_wifi_event_group;
 
@@ -50,19 +52,14 @@ static const int KEEPALIVE_COUNT            = 3;
 
 static esp_err_t ret;
 static int sock;
-static float* send_buf_p;
 
 static esp_err_t NVS_Init()
 {
-    static const char* TAG = "NVS Init";
-    ESP_LOGI(TAG, "Entering NVS...");
     ret = nvs_flash_init();
-    ESP_LOGW(TAG, "initing NVS...");
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
       ESP_ERROR_CHECK(nvs_flash_erase());
       ret = nvs_flash_init();
     }
-    ESP_LOGW(TAG, "if NVS...");
     ESP_ERROR_CHECK(ret);
     return ret;
 }
@@ -187,12 +184,14 @@ esp_err_t wifi_sta_init(int n)
                                                         &sta_event_handler,
                                                         NULL,
                                                         &instance_got_ip));
-
-    wifi_config_t wifi_config;
-    strcpy((char*)wifi_config.sta.ssid, EXAMPLE_ESP_WIFI_SSID);
-    strcpy((char*)wifi_config.sta.password, EXAMPLE_ESP_WIFI_PASS);
-    wifi_config.sta.threshold.authmode = WIFI_AUTH_MODE;
-    wifi_config.sta.sae_pwe_h2e = WPA3_SAE_PWE_BOTH;
+    wifi_config_t wifi_config = {
+        .sta = {
+            .ssid = EXAMPLE_ESP_WIFI_SSID,
+            .password = EXAMPLE_ESP_WIFI_PASS,
+            .threshold.authmode = WIFI_AUTH_WPA2_PSK,
+            .sae_pwe_h2e = WPA3_SAE_PWE_BOTH,
+        },
+    };
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());
@@ -229,16 +228,10 @@ esp_err_t wifi_sta_init(int n)
 
 void TCP_Send(float* p)
 {
-    int i;
     static const char* TAG = "Send";
+
     ESP_LOGI(TAG, "In sending...%d", num);
     int to_write = num * sizeof(float);
-    // send_buf_p = (float*)malloc(to_write);
-    // for (i = 0; i < num; i++)
-    // {
-    //     send_buf_p[i] = norm(p[i]);
-    //     ESP_LOGI(TAG, "Msg:%f", send_buf_p[i]);
-    // }
     while (to_write > 0){
         int written = send(sock, p + (num * sizeof(float) - to_write), to_write, 0);
         if (written < 0) {
@@ -247,7 +240,6 @@ void TCP_Send(float* p)
         to_write -= written;
         ESP_LOGI(TAG, "Left:%d", to_write);
     }
-    // free(send_buf_p);
 }
 
 void TCP_Server_Start()
