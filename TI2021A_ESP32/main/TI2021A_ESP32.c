@@ -63,7 +63,6 @@ void Sample()
         FFT_Start();
         FFT_Get_Norms();
 
-
         fft_base_freq = FFT_Get_Accurate_Base_Freq(freq_interval);
         ESP_LOGI(TAG, "base freq:%lu", fft_base_freq);
         FFT_Get_Normalized_Amp(freq_amp_norm, HARMONIC_ORDER, freq_interval);

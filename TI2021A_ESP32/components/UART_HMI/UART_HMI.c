@@ -130,6 +130,7 @@ void UARTHMI_Draw_Curve_addt(float* pf, uint16_t num)
     uint8_t data_tmp_write; //for write
     int i, data_len, total_num, send_num, interval_num, temp_data_len = -1;
     float max_vol = pf[0], coef = 0, min_vol = pf[0];
+    esp_err_t err_rcv = ESP_FAIL;
 
     total_num = num;
     interval_num = num / MAX_SEND_LEN;
@@ -139,13 +140,13 @@ void UARTHMI_Draw_Curve_addt(float* pf, uint16_t num)
     sprintf((char*)numstr, "%d", send_num);
     strcat((char*)START_TRANS, (const char*)numstr);
     data_len = UARTHMI_Append_Ending(START_TRANS);
-    while (temp_data_len == -1)
+    while ((temp_data_len == -1) || (err_rcv != ESP_OK))
     {
         data_len = UART_Write_Data(HMI_UART_NUM, START_TRANS, data_len);
         ESP_LOGI(TAG, "write done, size:%d", data_len);
         temp_data_len = UART_Read_Data(HMI_UART_NUM, data_tmp_read);
+        err_rcv = UARTHMI_Check_Return_Data(ready, data_tmp_read);
     }
-    ESP_ERROR_CHECK(UARTHMI_Check_Return_Data(ready, data_tmp_read));
     ESP_LOGI(TAG, "start send points:%d", send_num);
 
     for (i = 0; i < total_num; i += interval_num)
