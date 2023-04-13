@@ -75,7 +75,7 @@ void FFT_Load_Data(uint16_t* adc_value_p, int n, float** norm_p)
 
 void FFT_Release_Data()
 {
-    ESP_LOGI("FFT Release", "OK");
+    // ESP_LOGI("FFT Release", "OK");
     free(fft_data);
     free(norms);
 }
@@ -179,12 +179,12 @@ int FFT_Get_Accurate_Base_Freq(int freq_interval)
             base_freq_index = i;
         }
     }
-    ESP_LOGI(TAG, "max norm:%1f, index:%d", normmax, base_freq_index);
+    // ESP_LOGI(TAG, "max norm:%1f, index:%d", normmax, base_freq_index);
     tempnorm = normmax * base_freq_index;
     tempnorm_sum = normmax;
     for (int i = 1; ;++i)
     {
-        ESP_LOGI(TAG, "search range:%d to %d", base_freq_index - i, base_freq_index + i);
+        // ESP_LOGI(TAG, "search range:%d to %d", base_freq_index - i, base_freq_index + i);
         if ((norms[base_freq_index - i] > (normmax / 2)) && left)
         {
             tempnorm += norms[base_freq_index - i] * (base_freq_index - i);
@@ -238,10 +238,10 @@ void FFT_Get_Normalized_Amp(float* freq_amp_norm, uint8_t order, int freq_interv
                 temp_norm_max = norms[j];
             }
         }
-        if (real_index != temp_index)
-        {
-            ESP_LOGI("Normalize", "real:%d vs temp:%d", real_index, temp_index);
-        }
+        // if (real_index != temp_index)
+        // {
+        //     ESP_LOGI("Normalize", "real:%d vs temp:%d", real_index, temp_index);
+        // }
         real_index = temp_index;
         temp_norm_square_sum = temp_norm_max * temp_norm_max;
         // sum up the point with 20% norms

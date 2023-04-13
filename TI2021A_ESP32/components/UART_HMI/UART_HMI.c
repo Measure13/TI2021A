@@ -149,7 +149,7 @@ void UARTHMI_Draw_Curve_addt(float* pf, uint16_t num)
     }
     ESP_LOGI(TAG, "start send points:%d", send_num);
 
-    for (i = 0; i < total_num; i += interval_num)
+    for (i = total_num - 1; i >= 0; i -= interval_num)
     {
         if (max_vol < pf[i])
         {
@@ -160,8 +160,8 @@ void UARTHMI_Draw_Curve_addt(float* pf, uint16_t num)
             min_vol = pf[i];
         }
     }
-    coef = MAX_SEND_DATA / max_vol;
-    for (i = 0; i < total_num; i += interval_num)
+    coef = MAX_SEND_DATA / (max_vol - min_vol);
+    for (i = total_num - 1; i >= 0; i -= interval_num)
     {
         data_tmp_write = (uint8_t)((pf[i] - min_vol) * coef);
         UART_Write_Data(HMI_UART_NUM, &data_tmp_write, 1);
@@ -220,7 +220,7 @@ static void UARTHMI_Set_Float(int index, float float_num, uint8_t digits_for_int
     sprintf((char*)send_str, "x%d.val=%d", index, UARTHMI_Float_Adjust(float_num, digits_for_integer, digits_for_decimals));
     data_len = UARTHMI_Append_Ending(send_str);
     data_len = UART_Write_Data(HMI_UART_NUM, send_str, data_len);
-    ESP_LOGI(TAG, "write done, size:%d", data_len);
+    // ESP_LOGI(TAG, "write done, size:%d", data_len);
     free(send_str);
 }
 

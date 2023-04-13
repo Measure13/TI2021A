@@ -9,10 +9,6 @@
 #include "ADC.h"
 #include "UART_HMI.h"
 
-/*
-800    500    500    264.7   164.7
-*/
-
 static esp_err_t ret;
 
 extern int COMPLEX_SIZE;
@@ -27,6 +23,7 @@ static uint16_t* adc_value_p;
 static const uint8_t HARMONIC_ORDER = 5;
 static const float EXPAND_FACTOR = 1.1f;
 static const int SIGNAL_NUM = 1 << 10;
+static const float pi2 = 2 * acos(-1.0);
 
 void Sample()
 {
@@ -49,14 +46,16 @@ void Sample()
 
     memset(result, 0x00, sizeof(uint8_t) * SIGNAL_NUM * 2);
     adc_value_p = (uint16_t*)result;
+    ESP_LOGI(TAG, "Start ADC");
     ret = UART_Read_ADC(STM_UART_NUM, sampling_freq, result, SIGNAL_NUM);
+    ESP_LOGI(TAG, "Stop ADC");
     if (ret == ESP_OK) {
         FFT_Load_Data(adc_value_p, SIGNAL_NUM, &norms);
         // FFT_Hanning_Window();
 
         if (further_times == final_times)
         {
-            UARTHMI_Draw_Curve_addt(norms, SIGNAL_NUM);
+            // UARTHMI_Draw_Curve_addt(norms, SIGNAL_NUM);
             TCP_Send(norms);//TODO: change this param for better compatibility
         }
 
@@ -64,12 +63,12 @@ void Sample()
         FFT_Get_Norms();
 
         fft_base_freq = FFT_Get_Accurate_Base_Freq(freq_interval);
-        ESP_LOGI(TAG, "base freq:%lu", fft_base_freq);
+        // ESP_LOGI(TAG, "base freq:%lu", fft_base_freq);
         FFT_Get_Normalized_Amp(freq_amp_norm, HARMONIC_ORDER, freq_interval);
-        for (int i = 0; i < HARMONIC_ORDER; ++i)
-        {
-            ESP_LOGI(TAG, "normalized amp %d: %3f", i, freq_amp_norm[i]);
-        }
+        // for (int i = 0; i < HARMONIC_ORDER; ++i)
+        // {
+        //     ESP_LOGI(TAG, "normalized amp %d: %3f", i, freq_amp_norm[i]);
+        // }
 
         if (further_times == final_times)
         {
@@ -82,7 +81,22 @@ void Sample()
                 }
             }
             UARTHMI_Send_Float(HARMONIC_ORDER, sqrtf(distortion_degree));
-
+            float* wave = (float*)malloc(sizeof(float) * SIGNAL_NUM / 4);
+            memset(wave, 0.0f, sizeof(float) * SIGNAL_NUM / 4);
+            for (int j = 0; j < HARMONIC_ORDER; ++j)
+            {
+                for (int i = 0; i < SIGNAL_NUM / 4; ++i)
+                {
+                    wave[i] += freq_amp_norm[j] * sinf(i * pi2 / SIGNAL_NUM * 4 * (j + 1));
+                }
+            }
+            // for (int i = 0; i < SIGNAL_NUM / 4; ++i)
+            // {
+            //     ESP_LOGI(TAG, "wave:%f", wave[i]);
+            // }
+            
+            UARTHMI_Draw_Curve_addt(wave, SIGNAL_NUM / 4);
+            free(wave);
             TCP_Close();
         }
         FFT_Release_Data();
