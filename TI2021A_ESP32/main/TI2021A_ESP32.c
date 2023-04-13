@@ -54,9 +54,9 @@ void Sample()
         FFT_Load_Data(adc_value_p, SIGNAL_NUM, &norms);
         // FFT_Hanning_Window();
 
-        UARTHMI_Draw_Curve_addt(norms, SIGNAL_NUM);
-        if (further_times == 2)
+        if (further_times == final_times)
         {
+            UARTHMI_Draw_Curve_addt(norms, SIGNAL_NUM);
             TCP_Send(norms);//TODO: change this param for better compatibility
         }
 

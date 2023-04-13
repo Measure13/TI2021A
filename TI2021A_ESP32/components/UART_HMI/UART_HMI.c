@@ -16,7 +16,7 @@ const int special_cmd_len = 4;
 void UART_Init(void)
 {
     uart_config_t uart_config_hmi = {
-        .baud_rate = 9600,
+        .baud_rate = 115200,
         .data_bits = UART_DATA_8_BITS,
         .parity = UART_PARITY_DISABLE,
         .stop_bits = UART_STOP_BITS_1,
@@ -32,7 +32,7 @@ void UART_Init(void)
     ESP_ERROR_CHECK(uart_set_pin(HMI_UART_NUM, 17, 16, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
 
     uart_config_t uart_config_stm = {
-        .baud_rate = 9600,
+        .baud_rate = 115200,
         .data_bits = UART_DATA_8_BITS,
         .parity = UART_PARITY_DISABLE,
         .stop_bits = UART_STOP_BITS_1,
