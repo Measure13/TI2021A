@@ -81,6 +81,7 @@ void Sample()
                 }
             }
             UARTHMI_Send_Float(HARMONIC_ORDER, sqrtf(distortion_degree));
+            ESP_LOGW(TAG, "distortion:%f", sqrtf(distortion_degree));
             float* wave = (float*)malloc(sizeof(float) * SIGNAL_NUM / 4);
             memset(wave, 0.0f, sizeof(float) * SIGNAL_NUM / 4);
             for (int j = 0; j < HARMONIC_ORDER; ++j)

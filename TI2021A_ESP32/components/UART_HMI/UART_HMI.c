@@ -188,7 +188,7 @@ static uint8_t UARTHMI_Get_Integer_Digits(int integer)
     }
     else if (integer == 0)
     {
-        return 0;
+        return 1;
     }
     else
     {
@@ -199,10 +199,12 @@ static uint8_t UARTHMI_Get_Integer_Digits(int integer)
 
 static int UARTHMI_Float_Adjust(float float_num, uint8_t digits_for_integer, uint8_t digits_for_decimals)
 {
+    ESP_LOGW("fad", "distortion:%d", (int)float_num);
     uint8_t integer_len = UARTHMI_Get_Integer_Digits((int)float_num);
+    ESP_LOGW("fad", "distortion len:%u", integer_len);
     int adjusted_float = 0;
     integer_len = digits_for_integer + digits_for_decimals - integer_len;
-    float_num *= powf(10.0f, integer_len - 1);//must minus 1 to get correct result
+    float_num *= powf(10.0f, integer_len);
     adjusted_float = (int)float_num;
     return adjusted_float;
 }
@@ -217,6 +219,7 @@ static void UARTHMI_Set_Float(int index, float float_num, uint8_t digits_for_int
     send_str = (uint8_t*)malloc(sizeof(uint8_t) * (len));
     if (!send_str)ESP_ERROR_CHECK(ESP_ERR_NO_MEM);
     memset(send_str, 0, sizeof(uint8_t) * (len));
+    ESP_LOGE(TAG, "distortion:%f", float_num);
     sprintf((char*)send_str, "x%d.val=%d", index, UARTHMI_Float_Adjust(float_num, digits_for_integer, digits_for_decimals));
     data_len = UARTHMI_Append_Ending(send_str);
     data_len = UART_Write_Data(HMI_UART_NUM, send_str, data_len);

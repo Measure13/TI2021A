@@ -49,7 +49,7 @@ if __name__ == "__main__":
             plt.plot(np.arange(last_time), voltage)
             if vol:
                 np.save("voltage", voltage)
-                plt.plot(np.arange(last_time), np.abs(fft(voltage)))
+                plt.plot(np.arange(last_time), voltage)
                 plt.show()
             else:
                 np.save("fft", voltage)
