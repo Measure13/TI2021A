@@ -1,0 +1,1170 @@
+{
+  "schematics": {
+    "5650258c5914488782221022c625222a": {
+      "name": "Schematic1",
+      "sheets": [
+        {
+          "name": "P1",
+          "id": 1,
+          "uuid": "fa782e3ba56548acbb303095bba16bbb"
+        }
+      ]
+    },
+    "d11b235aea2a441a8c00ea75f9595c69": {
+      "name": "Schematic2",
+      "sheets": [
+        {
+          "name": "P1",
+          "id": 1,
+          "uuid": "a30df4c7cf394e9eaa88cf9fa3ab3190"
+        }
+      ]
+    }
+  },
+  "pcbs": {
+    "22fd5e59e3bd46259436d1ebb4941c95": "PCB2",
+    "887e2c98322e4bb3972c133a7698561b": "PCB1"
+  },
+  "panels": {},
+  "symbols": {
+    "abbb7cc231514288bb607d833c472d73": {
+      "source": "f2baecf085944dad81faf9a0fd6bfcea|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"\",\"\"]",
+      "title": "Sheet-Symbol_A4",
+      "version": "1664282381",
+      "type": 20
+    },
+    "12a03f1ff7fe441e92ccdc6a00b29cd8": {
+      "source": "5ac51df4dee84515afcf3fdd6d3777c3|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"运算放大器/比较器\",\"可编程/可变增益放大器(PGA/VGA)\"]",
+      "title": "VCA821ID",
+      "version": "1672909210",
+      "type": 2
+    },
+    "90328b1f609441c484158e32daf01a82": {
+      "source": "52f429b927d248d19190a6e486ded119|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"运算放大器/比较器\",\"运算放大器\"]",
+      "title": "OPA695ID",
+      "version": "1677546935",
+      "type": 2
+    },
+    "c630daee2e0848759cc9ab6e5ee8c7bd": {
+      "source": "36d796762e9c43e29318a0197470ae2f|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"运算放大器/比较器\",\"运算放大器\"]",
+      "title": "OPA227U",
+      "version": "1672365603",
+      "type": 2
+    },
+    "4e080d79baf840f68c34b748c3119f09": {
+      "source": "c1b8b751a29345708c24bcef9a67e2b3|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "Power-VCC",
+      "version": "1659060554",
+      "type": 18
+    },
+    "bee364fdb7fa49ac95ceb7379d8f7c3c": {
+      "source": "337f98afd0264cae93d16cc3bf65754a|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"电阻\",\"贴片电阻\"]",
+      "title": "电阻",
+      "version": "1653966354",
+      "type": 2
+    },
+    "2af7ee218dae40cba1e8c196b7bd5514": {
+      "source": "542d01b8b25e4236a453d7437c3944df|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "Ground-GND",
+      "version": "1642995718",
+      "type": 18
+    },
+    "ee7a593b7e0f4b73a8cc6890b565f010": {
+      "source": "949a2e3c601a40cba4ed7a2413b126b4|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"连接器\",\"RF射频同轴连接器\"]",
+      "title": "HJ-SMA501",
+      "version": "1672853723",
+      "type": 2
+    },
+    "a5889ffc140a4db29b12538101884f75": {
+      "source": "02d28a254e1c48abbe2433bf465b93ad|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "Short-Symbol",
+      "version": "1648180161",
+      "type": 22
+    },
+    "2b4cae06b387439c94da304b0fa306a1": {
+      "source": "9b22c8ce281e45e586f53e833f42da4a|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "CapAcitance",
+      "version": "1670465795",
+      "type": 2
+    },
+    "8f3e50a796b04b4f90e5523f88a0cf7b": {
+      "source": "7c073307bd1d43ba997f90c0dad5081c|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"二极管\",\"通用二极管\"]",
+      "title": "1N4002_C2892671",
+      "version": "1673059504",
+      "type": 2
+    },
+    "244fb0d9d4ff4d76986e908dddc58ece": {
+      "source": "7e4a3fa416de498785d4b983a65978c9|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "100nF (104) ±10% 50V",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"电容\",\"贴片电容(MLCC)\"]",
+      "title": "CL10B104KB8NNNC",
+      "version": "1678238746",
+      "type": 2
+    },
+    "834e518f578740ef98064fb1384d0f45": {
+      "source": "45dcca40117342dabe5438d6ab6fdf96|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"电容\",\"贴片电容(MLCC)\"]",
+      "title": "CC0805KKX7RYBB104",
+      "version": "1679083204",
+      "type": 2
+    },
+    "11906181d08545419db47910bed828be": {
+      "source": "7ea8f677975546a48fd8d1bd722a0b89|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"电容\",\"贴片电容(MLCC)\"]",
+      "title": "CL10B104KB8VPJC",
+      "version": "1673071508",
+      "type": 2
+    },
+    "c043ec83bd4c46b5b4054437b53d75d2": {
+      "source": "eb412ad0f37e4f7bbc47ea5556edd9cd|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "3.0 V, 50 ppm  degC, 50 uA Series (Bandgap) Voltage Reference, -40 to 125 degC, 3-pin SOT-23 (DBZ), Green (RoHS  no SbBr)",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"电源芯片\",\"电压基准芯片\"]",
+      "title": "REF3030AIDBZR",
+      "version": "1675131684",
+      "type": 2
+    },
+    "1e7895aca1f646128d2f9846e954e5db": {
+      "source": "25bf754adc304483add0d0d9357319e3|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "1KΩ (1001) ±1%",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"电阻\",\"贴片电阻\"]",
+      "title": "0603WAF1001T5E",
+      "version": "1672232402",
+      "type": 2
+    },
+    "356d164960284286bdc55ba523e6a1ec": {
+      "source": "e23085a8f904493eb2ce369cbc1b267c|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "10KΩ (1002) ±1%",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"电阻\",\"贴片电阻\"]",
+      "title": "0603WAF1002T5E",
+      "version": "1672253704",
+      "type": 2
+    },
+    "f92181b97fe74b62aa6ad3fb541f934c": {
+      "source": "061a2c804ac94030b09af596bddca03c|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "100nF (104) ±10% 50V",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"电容\",\"贴片电容(MLCC)\"]",
+      "title": "CC0603KRX7R9BB104",
+      "version": "1678238739",
+      "type": 2
+    },
+    "2e2b1e3c104f4ca39802f61e32d52066": {
+      "source": "88f801fa73a24926a78b98f126429f07|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "Netport-BI",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[]",
+      "title": "Netport-BI",
+      "version": "1635849730",
+      "type": 19
+    },
+    "82e98cdbfc7d4a5282b838d84babdf89": {
+      "source": "6a705a52a48f4348b530df227ca30f12|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"运算放大器/比较器\",\"运算放大器\"]",
+      "title": "OPA820ID",
+      "version": "1677546920",
+      "type": 2
+    },
+    "d94a8d31b5474152b7c5c41a85f5e1a9": {
+      "source": "0981a517abdb4b36aee5d1497b07e5cc|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"运算放大器/比较器\",\"运算放大器\"]",
+      "title": "OPA820IDR_C2878255",
+      "version": "1672909507",
+      "type": 2
+    },
+    "4e37b790cde047cd9bfeb83c2872b501": {
+      "source": "934450ee06344c95908423a12d4d7636|0819f05c4eef4c71ace90d822a990e87",
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"电阻\",\"可调电阻/电位器\"]",
+      "title": "3296W-1-103",
+      "version": "1672557004",
+      "type": 2
+    }
+  },
+  "footprints": {
+    "c25b942e1ec84c0481d994467548249d": {
+      "title": "SOIC-14_L8.7-W3.9-P1.27-LS6.0-BL",
+      "source": "f1b3106e9d564687958e1016421ed2c5|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1678686818",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"SOIC-14\"]"
+    },
+    "575ebf2ee2ef477c958ff51a647c95b9": {
+      "title": "SOIC-8_L4.9-W3.9-P1.27-LS6.0-BL",
+      "source": "2e6932429ae745aea190762fe65ff34b|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1675760124",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"SOIC-8\"]"
+    },
+    "b77764dacd674636a2716915f14b4a81": {
+      "title": "R0603",
+      "source": "50b4943912284dab97752312e589e9e2|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1676254243",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"RES-SMD\",\"\"]"
+    },
+    "bd93bd71480f41b1ac1244aab558a7b9": {
+      "title": "SMA-SMD_HJ-SMA501",
+      "source": "bc31391b371a436b85deef4be43d84fe|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1645753998",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"SMA-SMD\"]"
+    },
+    "fa987e9ca5164e839c8ad86c7b4f18bc": {
+      "title": "C0603",
+      "source": "76d6c29a47804db487f8a92b2621751b|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1675328510",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CAP-SMD\",\"\"]"
+    },
+    "aed7656f94f54becad2cd6a0ab925072": {
+      "title": "SMA_L4.3-W2.7-LS5.1-RD",
+      "source": "fc6d6d207eec44abae77a0a6567e0ac3|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1649759322",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"SMA\"]"
+    },
+    "887e2c98322e4bb3972c133a7698561b_e75": {
+      "title": "sma-smd_hj-sma501",
+      "source": "bd93bd71480f41b1ac1244aab558a7b9",
+      "version": "1678972113",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"SMA-SMD\"]",
+      "uuid": "887e2c98322e4bb3972c133a7698561b_e75"
+    },
+    "946124d1c5b8449b8c56e007b7002fe7": {
+      "title": "C0805",
+      "source": "ccb32feceadc4298b406326a506ce8e7|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1667381261",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"CAP-SMD\"]"
+    },
+    "a41b9a16004342fb92fffd766fa4d93c": {
+      "title": "SOT-23-3_L2.9-W1.6-P1.90-LS2.8-BR",
+      "source": "078e43bc93394f49815211c4fd533d19|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1652427697",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"SOT-23-3\"]"
+    },
+    "a0c2ea11ac1f44d7827c9acb565b944f": {
+      "title": "RES-ADJ-TH_3P-L10.0-W10.0-P2.50-L",
+      "source": "4e4a5cdd06e644768cc4ae5a4801735a|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1588133882",
+      "type": 4,
+      "desc": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "custom_tags": "[\"RES-ADJ-TH\"]"
+    }
+  },
+  "devices": {
+    "0214b06ed6f44901a767be5840c0e09d": {
+      "title": "Sheet-Symbol_A4",
+      "attributes": {
+        "Symbol": "abbb7cc231514288bb607d833c472d73",
+        "@Page Name": "",
+        "@Create Date": "",
+        "@Page Count": "",
+        "@Page No": "",
+        "@Project Name": "",
+        "@Schematic Name": "",
+        "@Update Date": "",
+        "Company": "嘉立创EDA",
+        "Device": "",
+        "Drawed": "",
+        "Page Size": "A4",
+        "Part Number": "",
+        "Reviewed": "",
+        "Version": "V1.0",
+        "Footprint": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "4b872d674c0b4b0e8ede0a73cf1a0316|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1664282381",
+      "custom_tags": "[\"\",\"\"]"
+    },
+    "4245da0b465e4bffaea69a3553cf2adb": {
+      "title": "VCA821ID",
+      "attributes": {
+        "LCSC Part Name": "VCA821ID",
+        "Supplier Part": "C2866982",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "VCA821ID",
+        "Supplier Footprint": "SOIC-14",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20230222/63855F0C2D28889CDF36348CAA18D2B0.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "12a03f1ff7fe441e92ccdc6a00b29cd8",
+        "Designator": "U?",
+        "Footprint": "c25b942e1ec84c0481d994467548249d",
+        "3D Model": "8dbf5b715d42428c85558507ae5a252b",
+        "3D Model Title": "SOIC-14_L8.6-W3.9-H1.8-LS6.0-P1.27",
+        "3D Model Transform": "338.583,236.22,0,0,0,0,0,-0.001,0",
+        "Amplifier Type": "VGA",
+        "Number of Channels": "1",
+        "Bandwidth (-3dB)": "710MHz",
+        "Gain Bandwidth Product (GBP)": "-",
+        "Rain to Rain": "-",
+        "Output Current": "90mA",
+        "Gain": "-",
+        "Input Bias Current (Ib)": "19uA",
+        "Slew Rate (SR)": "2500V/us",
+        "Supply Current": "34mA",
+        "Supply Voltage": "-",
+        "Operating Temperature": "-40℃~+85℃",
+        "Name": "={Manufacturer Part}",
+        "Description": "放大器类型:VGA;通道数:1;-3dB带宽:710MHz;增益带宽积(GBP):-;轨到轨:-;输出电流:90mA;增益:-;输入偏置电流(Ib):19uA;压摆率(SR):2500V/us;电源电流:34mA;供电电压:-;工作温度:-40℃~+85℃;"
+      },
+      "description": "放大器类型:VGA;通道数:1;-3dB带宽:710MHz;增益带宽积(GBP):-;轨到轨:-;输出电流:90mA;增益:-;输入偏置电流(Ib):19uA;压摆率(SR):2500V/us;电源电流:34mA;供电电压:-;工作温度:-40℃~+85℃;",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230105/6B2B4AACEEE7F62E2604086DC427F06C.jpg"
+      ],
+      "source": "150ad1f855d346778065262d66d42c7b|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1658435081",
+      "custom_tags": "[\"运算放大器/比较器\",\"可编程/可变增益放大器(PGA/VGA)\"]"
+    },
+    "9bd4fd8daea045e9a24125e6789646bd": {
+      "title": "OPA695ID",
+      "attributes": {
+        "LCSC Part Name": "OPA695ID",
+        "Supplier Part": "C1346879",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "OPA695ID",
+        "Supplier Footprint": "SOIC-8",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "90328b1f609441c484158e32daf01a82",
+        "Designator": "U?",
+        "Footprint": "575ebf2ee2ef477c958ff51a647c95b9",
+        "3D Model": "e81d2f7d937b4a6ab1dca543ff5d56a4",
+        "3D Model Title": "SOIC-8_L4.9-W3.9-H1.7-LS6.0-P1.27",
+        "3D Model Transform": "189.751,236.22,0,0,0,0,0.0005,0.0005,0",
+        "Name": "={Manufacturer Part}",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "04b8fdc37ac146df9a1813ea4532dc64|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1658433869",
+      "custom_tags": "[\"运算放大器/比较器\",\"运算放大器\"]"
+    },
+    "4dca9aa5308343268aff27c09d3245d1": {
+      "title": "OPA227U",
+      "attributes": {
+        "LCSC Part Name": "OPA227U",
+        "Supplier Part": "C56063",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "OPA227U",
+        "Supplier Footprint": "SOIC-8",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20180528/C56063_CD08CAA3A02D001B95EC1EE6F0409B13.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "c630daee2e0848759cc9ab6e5ee8c7bd",
+        "Designator": "U?",
+        "Footprint": "575ebf2ee2ef477c958ff51a647c95b9",
+        "3D Model": "e81d2f7d937b4a6ab1dca543ff5d56a4",
+        "3D Model Title": "SOIC-8_L4.9-W3.9-H1.7-LS6.0-P1.27",
+        "3D Model Transform": "189.751,236.22,0,0,0,0,0.0005,0.0005,0",
+        "Amplifier Type": "General Purpose",
+        "Number of Circuits": "1",
+        "Gain Bandwidth Product(GBP)": "8MHz",
+        "Slew Rate(SR)": "2.3 V/us",
+        "Output Type": "-",
+        "Supply Voltage(Single)": "5V ~ 36V, ±2.5V ~ 18V",
+        "Iq per channel (Typ)": "-",
+        "Operating Temperature": "-40℃~85℃",
+        "Name": "={Manufacturer Part}",
+        "Description": "运放类型:General Purpose;放大器组数:1;增益带宽积(GBP):8MHz;压摆率(SR):2.3 V/us;电源电压:5V ~ 36V, ±2.5V ~ 18V;各通道供电电流:-;"
+      },
+      "description": "运放类型:General Purpose;放大器组数:1;增益带宽积(GBP):8MHz;压摆率(SR):2.3 V/us;电源电压:5V ~ 36V, ±2.5V ~ 18V;各通道供电电流:-;",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20221230/CB000A402E3F80527ECB61BAB7BB6446.jpg"
+      ],
+      "source": "cfdd431805684e60848f7096d6526845|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1654803615",
+      "custom_tags": "[\"运算放大器/比较器\",\"运算放大器\"]"
+    },
+    "051baf20c6cd43d4b4b080c7cc2cabde": {
+      "title": "Power-VCC",
+      "attributes": {
+        "Symbol": "4e080d79baf840f68c34b748c3119f09",
+        "Global Net Name": "VCC",
+        "Footprint": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "b381658129d94456b54f23250ef5a375|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1659060554",
+      "custom_tags": "[]"
+    },
+    "a29fd0a06815476190f3176f3a7c14b1": {
+      "title": "Res_0603",
+      "attributes": {
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Designator": "R?",
+        "Supplier Footprint": "0603",
+        "Symbol": "bee364fdb7fa49ac95ceb7379d8f7c3c",
+        "Footprint": "b77764dacd674636a2716915f14b4a81",
+        "3D Model": "6bd5cd867e9542ebae21caaf5d2d4c4d",
+        "3D Model Title": "R0603",
+        "3D Model Transform": "31.8897,63.7794,0,90,0,0,0,0,0",
+        "Value": "10K",
+        "Name": "={Value}",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "f61af53b8d604d888b6dd9daa1a301b0|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1653975500",
+      "custom_tags": "[\"电阻\",\"贴片电阻\"]"
+    },
+    "c0bd6e736db24875a0bf7f11cb5cc750": {
+      "title": "Ground-GND",
+      "attributes": {
+        "Symbol": "2af7ee218dae40cba1e8c196b7bd5514"
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "9a64ac5790a940f7ae40fc736dc6faff|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1635931210",
+      "custom_tags": "[]"
+    },
+    "61a616fbd45946f698a7d996da7d00f0": {
+      "title": "HJ-SMA501",
+      "attributes": {
+        "LCSC Part Name": "RP-SMA 内针 偏脚",
+        "Supplier Part": "C2693812",
+        "Manufacturer": "皇捷",
+        "Manufacturer Part": "HJ-SMA501",
+        "Supplier Footprint": "插件",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20210518/C2693812_773E8C36107E5FFCBDC18D7D0F9EC35E.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "ee7a593b7e0f4b73a8cc6890b565f010",
+        "Designator": "RF?",
+        "Footprint": "bd93bd71480f41b1ac1244aab558a7b9",
+        "3D Model": "84fbd628a72f4b9b94a55dc63f309672",
+        "3D Model Title": "SMA-SMD_HJ-SMA501",
+        "3D Model Transform": "421.259,249.9995,0,0,0,0,202.835,0,-118.11",
+        "Connector Type": "板端",
+        "RF Series": "RP-SMA",
+        "Interface Type": "内针",
+        "Number of Ports": "1",
+        "Impedance": "-",
+        "Frequency-Max": "-",
+        "Style": "偏脚",
+        "Interface Diameter": "-",
+        "Interface Length/Height": "-",
+        "Operating Temperature Range": "-",
+        "Name": "={Manufacturer Part}",
+        "Description": "连接器类型:板端;射频系列:RP-SMA;接口类型:内针;端口数量:1;阻抗:-;频率-最大值:-;样式:偏脚;接口直径:-;接口长度/高度:-;工作温度范围:-;"
+      },
+      "description": "连接器类型:板端;射频系列:RP-SMA;接口类型:内针;端口数量:1;阻抗:-;频率-最大值:-;样式:偏脚;接口直径:-;接口长度/高度:-;工作温度范围:-;",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230105/CA74EE8E8B270FEDB90004157E4605F4.jpg"
+      ],
+      "source": "0104715d614c49f084c48c397adb2840|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1654895120",
+      "custom_tags": "[\"连接器\",\"RF射频同轴连接器\"]"
+    },
+    "5c0e194d13b14154ad94f558907b5f51": {
+      "title": "Short-Symbol",
+      "attributes": {
+        "Symbol": "a5889ffc140a4db29b12538101884f75"
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "969e264ca0d545929f65fa01b3959f6d|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1630399123",
+      "custom_tags": "[]"
+    },
+    "71b085f9f55c442ba86f1beb744c52b2": {
+      "title": "CAP_0603",
+      "attributes": {
+        "Convert to PCB": "yes",
+        "Add into BOM": "yes",
+        "Designator": "C?",
+        "Supplier Footprint": "0603",
+        "Symbol": "2b4cae06b387439c94da304b0fa306a1",
+        "Footprint": "fa987e9ca5164e839c8ad86c7b4f18bc",
+        "3D Model": "ac125912035d415993ca9572d50418b1",
+        "3D Model Title": "C0603_L1.6-W0.8-H0.8",
+        "3D Model Transform": "62.992,31.496,0,0,0,0,0,0,0",
+        "Value": "100nF",
+        "Name": "={Value}",
+        "Description": ""
+      },
+      "description": "",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "4e48d71315ce4d4c9f2ca294a3b1380b|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1670465822",
+      "custom_tags": "[]"
+    },
+    "da103bb807134e18b9f8d8f11f927145": {
+      "title": "1N4002",
+      "attributes": {
+        "LCSC Part Name": "100V 1A 1.1V@1A",
+        "Supplier Part": "C2892671",
+        "Manufacturer": "YONGYUTAI(永裕泰)",
+        "Manufacturer Part": "1N4002",
+        "Supplier Footprint": "SMA(DO-214AC)",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20210906/4E1432E8E624C96A2E9E3CA0932F1666.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "8f3e50a796b04b4f90e5523f88a0cf7b",
+        "Designator": "D?",
+        "Footprint": "aed7656f94f54becad2cd6a0ab925072",
+        "3D Model": "5b7d57c23c9f472788911caf890f0710",
+        "3D Model Title": "SMA_L4.3-W2.7-LS5.1-RD",
+        "3D Model Transform": "198.4248,106.299,0,0,0,0,0,0,0",
+        "Diode Configuration": "-",
+        "Reverse Voltage (Vr)": "100V",
+        "Average Rectified Current (Io)": "1A",
+        "Forward Voltage (Vf@If)": "1.1V@1A",
+        "Reverse Leakage Current": "5uA@100V",
+        "Name": "={Manufacturer Part}",
+        "Description": "二极管配置:-;直流反向耐压(Vr):100V;平均整流电流(Io):1A;正向压降(Vf):1.1V@1A;反向电流(Ir):5uA@100V;"
+      },
+      "description": "二极管配置:-;直流反向耐压(Vr):100V;平均整流电流(Io):1A;正向压降(Vf):1.1V@1A;反向电流(Ir):5uA@100V;",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230107/6FA7D22286A86C765CFA403B629420B2.jpg"
+      ],
+      "source": "a7af79d08f3645c9a30f747197ef190f|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1658334020",
+      "custom_tags": "[\"二极管\",\"通用二极管\"]"
+    },
+    "6ff29dfb78904407981fbebf2e9e448a": {
+      "title": "CL10B104KB8NNNC",
+      "attributes": {
+        "LCSC Part Name": "100nF ±10% 50V",
+        "Supplier Part": "C1591",
+        "Manufacturer": "SAMSUNG(三星)",
+        "Manufacturer Part": "CL10B104KB8NNNC",
+        "Supplier Footprint": "0603",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20160103/1457707680512.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "244fb0d9d4ff4d76986e908dddc58ece",
+        "Designator": "C?",
+        "Footprint": "fa987e9ca5164e839c8ad86c7b4f18bc",
+        "3D Model": "ac125912035d415993ca9572d50418b1",
+        "3D Model Title": "C0603_L1.6-W0.8-H0.8",
+        "3D Model Transform": "62.992,31.496,0,0,0,0,0,0,0",
+        "Value": "100nF",
+        "Tolerance": "±10%",
+        "Voltage Rated": "50V",
+        "Temperature Coefficient": "X7R",
+        "Name": "={Value}",
+        "Description": "容值:100nF;精度:±10%;额定电压:50V;材质(温度系数):X7R;"
+      },
+      "description": "容值:100nF;精度:±10%;额定电压:50V;材质(温度系数):X7R;",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230108/ED41954D034C40AB3C90253639010900.jpg"
+      ],
+      "source": "ac7072e4a0764739a31216c96ed3c9cc|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1658259901",
+      "custom_tags": "[\"电容\",\"贴片电容(MLCC)\"]"
+    },
+    "a75baf2bcbd646bf84d5eaad83895732": {
+      "title": "CC0805KKX7RYBB104",
+      "attributes": {
+        "LCSC Part Name": "100nF 250V",
+        "Supplier Part": "C5182461",
+        "Manufacturer": "YAGEO(国巨)",
+        "Manufacturer Part": "CC0805KKX7RYBB104",
+        "Supplier Footprint": "0805",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20221128/702B93964AFD2B2041FCCB4DE542BD34.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "834e518f578740ef98064fb1384d0f45",
+        "Designator": "U?",
+        "Footprint": "946124d1c5b8449b8c56e007b7002fe7",
+        "3D Model": "1ba041120af144c991958decab20d241",
+        "3D Model Title": "C0805_L2.0-W1.3-H1.3",
+        "3D Model Transform": "78.74,51.181,0,0,0,0,0,0.0005,0",
+        "Value": "100nF",
+        "Voltage Rated": "250V",
+        "Name": "={Value}",
+        "Description": "容值:100nF;额定电压:250V;"
+      },
+      "description": "容值:100nF;额定电压:250V;",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230105/51CF8D70B57FA8FAD9FC927B6B1C6DDE.jpg"
+      ],
+      "source": "aeae27af08cf412a92a3552076bc774d|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1679084403",
+      "custom_tags": "[\"电容\",\"贴片电容(MLCC)\"]"
+    },
+    "162f384a3f7841449335ff508505f55a": {
+      "title": "CL10B104KB8VPJC",
+      "attributes": {
+        "LCSC Part Name": "100nF ±10% 50V",
+        "Supplier Part": "C2803384",
+        "Manufacturer": "SAMSUNG(三星)",
+        "Manufacturer Part": "CL10B104KB8VPJC",
+        "Supplier Footprint": "0603",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20210617/C346226_6C124442B8E004027ECF60B29F82E9A1.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "11906181d08545419db47910bed828be",
+        "Designator": "U?",
+        "Footprint": "fa987e9ca5164e839c8ad86c7b4f18bc",
+        "3D Model": "ac125912035d415993ca9572d50418b1",
+        "3D Model Title": "C0603_L1.6-W0.8-H0.8",
+        "3D Model Transform": "62.992,31.496,0,0,0,0,0,0,0",
+        "Value": "100nF",
+        "Tolerance": "±10%",
+        "Voltage Rated": "50V",
+        "Temperature Coefficient": "-",
+        "Name": "={Value}",
+        "Description": "容值:100nF;精度:±10%;额定电压:50V;材质(温度系数):-;"
+      },
+      "description": "容值:100nF;精度:±10%;额定电压:50V;材质(温度系数):-;",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20210623/1389C0E4583EA9336738604EE282A86E.jpg"
+      ],
+      "source": "f0652801703f43c4a304112d22078e35|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1659187203",
+      "custom_tags": "[\"电容\",\"贴片电容(MLCC)\"]"
+    },
+    "06685903d49543d891dff5e199f9d936": {
+      "title": "REF3030AIDBZR",
+      "attributes": {
+        "LCSC Part Name": "REF3030AIDBZR",
+        "Supplier Part": "C38423",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "REF3030AIDBZR",
+        "Supplier Footprint": "SOT-23",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20141125/1457707248562.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "c043ec83bd4c46b5b4054437b53d75d2",
+        "Designator": "U?",
+        "Footprint": "a41b9a16004342fb92fffd766fa4d93c",
+        "3D Model": "89cb27a44ab2466697082bb9fd73a7d0",
+        "3D Model Title": "SOT-23-3L_L2.9-W1.6-H1.1-LS2.8-P0.95",
+        "3D Model Transform": "110.236,114.173,0,180,0,0,-0.005,0.0005,0",
+        "Name": "={Manufacturer Part}",
+        "Description": "REF3030 采用 SOT23-3 封装的 3.0V 输出 50ppm/℃ 漂移 50uA 静态电流的（带隙）电压参考系列"
+      },
+      "description": "REF3030 采用 SOT23-3 封装的 3.0V 输出 50ppm/℃ 漂移 50uA 静态电流的（带隙）电压参考系列",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20221229/117C3EE03293607DDB17309C2534E10E.jpg"
+      ],
+      "source": "e8d8791bce3b47f59affb55a4668993d|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1656708117",
+      "custom_tags": "[\"电源芯片\",\"电压基准芯片\"]"
+    },
+    "e4d4eecbbd054b8088c6d4f001f04b37": {
+      "title": "0603WAF1001T5E",
+      "attributes": {
+        "LCSC Part Name": "1kΩ ±1% 100mW",
+        "Supplier Part": "C21190",
+        "Manufacturer": "UNI-ROYAL(厚声)",
+        "Manufacturer Part": "0603WAF1001T5E",
+        "Supplier Footprint": "0603",
+        "JLCPCB Part Class": "Basic Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20200306/C422600_1E6D84923E4A46A82E41ADD87F860B5C.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "1e7895aca1f646128d2f9846e954e5db",
+        "Designator": "R?",
+        "Footprint": "b77764dacd674636a2716915f14b4a81",
+        "3D Model": "6bd5cd867e9542ebae21caaf5d2d4c4d",
+        "3D Model Title": "R0603",
+        "3D Model Transform": "31.8897,63.7794,0,90,0,0,0,0,0",
+        "Type": "厚膜电阻",
+        "Value": "1kΩ",
+        "Tolerance": "±1%",
+        "Power(Watts)": "100mW",
+        "Temperature Coefficient": "±100ppm/℃",
+        "Overload Voltage (Max)": "75V",
+        "Operating Temperature Range": "-55℃~+155℃",
+        "Name": "={Value}",
+        "Description": "电阻类型:厚膜电阻;阻值:1kΩ;精度:±1%;功率:100mW;温度系数:±100ppm/℃;最大工作电压:75V;工作温度范围:-55℃~+155℃;"
+      },
+      "description": "电阻类型:厚膜电阻;阻值:1kΩ;精度:±1%;功率:100mW;温度系数:±100ppm/℃;最大工作电压:75V;工作温度范围:-55℃~+155℃;",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20221228/6165AACA9F1A557BC3C736378F140C8D.jpg"
+      ],
+      "source": "18db11499a04403ba8c98e2f7a687fbc|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1658435074",
+      "custom_tags": "[\"电阻\",\"贴片电阻\"]"
+    },
+    "480120f5a72d45da9351ad60996473a1": {
+      "title": "0603WAF1002T5E",
+      "attributes": {
+        "LCSC Part Name": "10kΩ ±1% 100mW",
+        "Supplier Part": "C25804",
+        "Manufacturer": "UNI-ROYAL(厚声)",
+        "Manufacturer Part": "0603WAF1002T5E",
+        "Supplier Footprint": "0603",
+        "JLCPCB Part Class": "Basic Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20200306/C422600_1E6D84923E4A46A82E41ADD87F860B5C.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "356d164960284286bdc55ba523e6a1ec",
+        "Designator": "R?",
+        "Footprint": "b77764dacd674636a2716915f14b4a81",
+        "3D Model": "6bd5cd867e9542ebae21caaf5d2d4c4d",
+        "3D Model Title": "R0603",
+        "3D Model Transform": "31.8897,63.7794,0,90,0,0,0,0,0",
+        "Type": "厚膜电阻",
+        "Value": "10kΩ",
+        "Tolerance": "±1%",
+        "Power(Watts)": "100mW",
+        "Temperature Coefficient": "±100ppm/℃",
+        "Overload Voltage (Max)": "75V",
+        "Operating Temperature Range": "-55℃~+155℃",
+        "Name": "={Value}",
+        "Description": "电阻类型:厚膜电阻;阻值:10kΩ;精度:±1%;功率:100mW;温度系数:±100ppm/℃;最大工作电压:75V;工作温度范围:-55℃~+155℃;"
+      },
+      "description": "电阻类型:厚膜电阻;阻值:10kΩ;精度:±1%;功率:100mW;温度系数:±100ppm/℃;最大工作电压:75V;工作温度范围:-55℃~+155℃;",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20190224/936B9602640F46B2DAD6E42AA46EF921.jpg"
+      ],
+      "source": "b948db94476e4027ac8953235755ec96|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1658435056",
+      "custom_tags": "[\"电阻\",\"贴片电阻\"]"
+    },
+    "e5570b4e373c4f92bab68e43d623022c": {
+      "title": "CC0603KRX7R9BB104",
+      "attributes": {
+        "LCSC Part Name": "100nF ±10% 50V",
+        "Supplier Part": "C14663",
+        "Manufacturer": "YAGEO(国巨)",
+        "Manufacturer Part": "CC0603KRX7R9BB104",
+        "Supplier Footprint": "0603",
+        "JLCPCB Part Class": "Basic Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20170116/1484561234239.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "f92181b97fe74b62aa6ad3fb541f934c",
+        "Designator": "C?",
+        "Footprint": "fa987e9ca5164e839c8ad86c7b4f18bc",
+        "3D Model": "ac125912035d415993ca9572d50418b1",
+        "3D Model Title": "C0603_L1.6-W0.8-H0.8",
+        "3D Model Transform": "62.992,31.496,0,0,0,0,0,0,0",
+        "Value": "100nF",
+        "Tolerance": "±10%",
+        "Voltage Rated": "50V",
+        "Temperature Coefficient": "X7R",
+        "Name": "={Value}",
+        "Description": "容值:100nF;精度:±10%;额定电压:50V;材质(温度系数):X7R;"
+      },
+      "description": "容值:100nF;精度:±10%;额定电压:50V;材质(温度系数):X7R;",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20190222/C8822632DDA9A6805059E85710D2748C.jpg"
+      ],
+      "source": "96b39256cc3f4d80bd3b503deb4f3328|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1658259903",
+      "custom_tags": "[\"电容\",\"贴片电容(MLCC)\"]"
+    },
+    "1931c2c7d8a343e2b33dedc7c2c597f0": {
+      "title": "Netport-BI",
+      "attributes": {
+        "Symbol": "2e2b1e3c104f4ca39802f61e32d52066"
+      },
+      "description": "Netport-BI",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "327808a2276743528035d8345c17831f|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1635846421",
+      "custom_tags": "[\"特殊器件\"]"
+    },
+    "ab7cdf1551754a388e1e5a4d2f8fe1a1": {
+      "title": "OPA820ID",
+      "attributes": {
+        "LCSC Part Name": "OPA820ID",
+        "Supplier Part": "C1346481",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "OPA820ID",
+        "Supplier Footprint": "SOIC-8",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20230221/7B931C1C83B555BA46708DFEA30A302F.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "82e98cdbfc7d4a5282b838d84babdf89",
+        "Designator": "U?",
+        "Footprint": "575ebf2ee2ef477c958ff51a647c95b9",
+        "3D Model": "e81d2f7d937b4a6ab1dca543ff5d56a4",
+        "3D Model Title": "SOIC-8_L4.9-W3.9-H1.7-LS6.0-P1.27",
+        "3D Model Transform": "189.751,236.22,0,0,0,0,0.0005,0.0005,0",
+        "Number of Circuits": "-",
+        "Name": "={Manufacturer Part}",
+        "Description": "放大器组数:-;"
+      },
+      "description": "放大器组数:-;",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        ""
+      ],
+      "source": "1d4f856b7eb94571bbbf71b0609b5cc3|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1665031202",
+      "custom_tags": "[\"运算放大器/比较器\",\"运算放大器\"]"
+    },
+    "2f6f53633124482fba75310e8bb4bcbd": {
+      "title": "OPA820IDR_C2878255",
+      "attributes": {
+        "LCSC Part Name": "OPA820IDR",
+        "Supplier Part": "C2878255",
+        "Manufacturer": "TI(德州仪器)",
+        "Manufacturer Part": "OPA820IDR",
+        "Supplier Footprint": "SOIC-8",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20230221/7B931C1C83B555BA46708DFEA30A302F.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "d94a8d31b5474152b7c5c41a85f5e1a9",
+        "Designator": "U?",
+        "Footprint": "575ebf2ee2ef477c958ff51a647c95b9",
+        "3D Model": "e81d2f7d937b4a6ab1dca543ff5d56a4",
+        "3D Model Title": "SOIC-8_L4.9-W3.9-H1.7-LS6.0-P1.27",
+        "3D Model Transform": "189.751,236.22,0,0,0,0,0.0005,0.0005,0",
+        "Name": "={Manufacturer Part}",
+        "Description": "单位增益稳定、低噪声、电压反馈运算放大器 8-SOIC -40 to 85"
+      },
+      "description": "单位增益稳定、低噪声、电压反馈运算放大器 8-SOIC -40 to 85",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230105/9CB743A8D78B011066D8C0737F968442.jpg"
+      ],
+      "source": "fc4540df92ba4f57a46a4ddf1314af80|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1649760288",
+      "custom_tags": "[\"运算放大器/比较器\",\"运算放大器\"]"
+    },
+    "76adfa80d54c4609a148377d1e555954": {
+      "title": "3296W-1-103_C118954",
+      "attributes": {
+        "LCSC Part Name": "10kΩ ±10%",
+        "Supplier Part": "C118954",
+        "Manufacturer": "BOCHEN(博晨)",
+        "Manufacturer Part": "3296W-1-103",
+        "Supplier Footprint": "插件",
+        "JLCPCB Part Class": "Extended Part",
+        "Datasheet": "https://atta.szlcsc.com/upload/public/pdf/source/20171114/C118954_15106326646611117443.pdf",
+        "Supplier": "LCSC",
+        "Add into BOM": "yes",
+        "Convert to PCB": "yes",
+        "Symbol": "4e37b790cde047cd9bfeb83c2872b501",
+        "Designator": "R?",
+        "Footprint": "a0c2ea11ac1f44d7827c9acb565b944f",
+        "3D Model": "b182808559bb43bda9e7de64b64134cb",
+        "3D Model Title": "3296W",
+        "3D Model Transform": "374.015,188.976,0,180,0,0,0,0,-137.795",
+        "Value": "10kΩ",
+        "Tolerance": "±10%",
+        "Name": "={Value}",
+        "Description": "阻值:10kΩ;精度:±10%;"
+      },
+      "description": "阻值:10kΩ;精度:±10%;",
+      "tags": {
+        "parent_tag": [],
+        "child_tag": []
+      },
+      "images": [
+        "https://alimg.szlcsc.com/upload/public/product/middle/20230101/4C309065D3B551F2D9D1495D39FAB0DC.jpg"
+      ],
+      "source": "83ff663f2be74b8e88e7b301d51414b8|0819f05c4eef4c71ace90d822a990e87",
+      "version": "1655666601",
+      "custom_tags": "[\"电阻\",\"可调电阻/电位器\"]"
+    }
+  },
+  "boards": {
+    "Board1": {
+      "schematic": "5650258c5914488782221022c625222a",
+      "pcb": "887e2c98322e4bb3972c133a7698561b"
+    },
+    "Board2": {
+      "schematic": "d11b235aea2a441a8c00ea75f9595c69",
+      "pcb": "22fd5e59e3bd46259436d1ebb4941c95"
+    }
+  },
+  "config": {
+    "title": "2021-A",
+    "cbbProject": 0,
+    "defaultSheet": "",
+    "editorVersion": "2.0.13.dba36b"
+  }
+}
